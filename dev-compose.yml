@@ -10,3 +10,33 @@ services:
       - 80:3000
     volumes:
       - ./web/src:/app/src
+
+  backend:
+    container_name: backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/src:/app/src
+
+  mongo:
+    container_name: mongodb
+    image: mongo:latest
+    volumes:
+      - mongodata:/data/db
+    command: mongod --quiet --logpath /dev/null
+
+  postgres:
+    container_name: postgresql
+    image: postgres:latest
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: postgres
+
+volumes:
+  mongodata:
+  postgresdata:

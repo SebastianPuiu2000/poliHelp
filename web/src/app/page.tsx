@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="flex justify-center items-center bg-red-700">
+    <main className="flex items-center bg-red-700 justify-center">
       Hello World!
     </main>
   );
