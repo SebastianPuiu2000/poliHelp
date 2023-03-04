@@ -1,6 +1,6 @@
-import './globals.css'
-import { UserProvider } from './UserContext'
-
+import './globals.css';
+import { UserProvider } from './UserContext';
+import Navbar from '../components/Navbar';
 
 export const metadata = {
   title: 'App',
@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <UserProvider>
+          <Navbar/>
           {children}
         </UserProvider>
       </body>

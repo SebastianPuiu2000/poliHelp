@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import Navbar from "../../components/Navbar";
 import { useState } from "react";
 import help from "../../../public/help.png"
 import Image from "next/image";
@@ -53,7 +52,7 @@ export default function () {
       const userData = decode(loginData.jwt)
 
       userDispatch({
-        action: 'login',
+        type: 'login',
         payload: userData
       });
 
@@ -62,10 +61,7 @@ export default function () {
   }
 
   return (
-
     <div className="bg-violet-900">
-      <Navbar></Navbar>
-
       <div className="flex flex-col items-center justify-evenly bg-violet-900 m-10">
 
         {/* Group 1 */}

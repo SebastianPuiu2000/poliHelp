@@ -38,7 +38,7 @@ export default function Login() {
       const userData = decode(data.jwt)
 
       userDispatch({
-        action: 'login',
+        type: 'login',
         payload: userData
       });
 
@@ -47,10 +47,7 @@ export default function Login() {
   }
 
   return (
-
     <div className="bg-violet-900">
-      <Navbar></Navbar>
-
       <div className="flex flex-col items-center justify-center bg-violet-900">
         <form>
           <div className="bg-violet-900 w-96 p-6 py-10 rounded shadow-sm">

@@ -1,11 +1,9 @@
-import Navbar from "../components/NavbarH";
 import Image from "next/image";
 import handshake from "../../public/handshake.png";
 
 export default function Home() {
   return (
     <div>
-      <Navbar></Navbar>
       <div className="bg-violet-900 flex flex-col p-10 lg:flex-row justify-center items-center">
 
         <div className="items-center justify-center w-1/2 bg-violet-900 flex flex-col">
