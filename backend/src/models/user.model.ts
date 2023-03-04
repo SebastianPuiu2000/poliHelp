@@ -11,7 +11,6 @@ export enum userRole {
 
 export type User = {
     name: string,
-    username: string,
     password: string,
     role: userRole
 };
@@ -19,13 +18,8 @@ export type User = {
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
-    },
-    username: {
-        type: String,
-        unique: true,
-        trim: true,
-        minlength: 3
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -50,7 +44,6 @@ export async function createUser(user: User): Promise<string> {
     try {
         await UserModel.create({
             name: user.name,
-            username: user.username,
             password: hash,
             role: user.role
         });
