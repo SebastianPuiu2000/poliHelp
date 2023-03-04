@@ -2,7 +2,9 @@
 import { useUser } from "../UserContext"
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
-import help from "../../../public/help.png"
+import help from "../../../public/help.png";
+import handshake from "../../../public/handshake.png";
+import { useState } from "react";
 
 
 export default function Login() {
@@ -57,7 +59,6 @@ export default function Login() {
         </form>
 
         <button className="bg-black text-white w-28 text-center rounded-full py-2 px-1 mb-8 hover:outline"
-          disabled={secondOption === null}
           onClick={handleSubmit}
         >
           Submit
