@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       context: ./web
     ports:
-      - 80:3000
+      - 81:3000
     volumes:
       - ./web/src:/app/src
 
@@ -24,6 +24,8 @@ services:
   mongo:
     container_name: mongodb
     image: mongo:latest
+    ports:
+      - 3001:27017
     volumes:
       - mongodata:/data/db
     command: mongod --quiet --logpath /dev/null
