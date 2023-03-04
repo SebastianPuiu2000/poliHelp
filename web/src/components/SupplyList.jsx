@@ -4,6 +4,7 @@ import Image from "next/image";
 import food from "../../public/food.png";
 import drop from "../../public/drop.png";
 import shirt from "../../public/shirt.png";
+import paper from "../../public/toilet-paper.png";
 
 const SupplyNameMap = {
     'egg': 'Eggs',
@@ -27,8 +28,8 @@ const SupplyIconMap = {
     'water': drop,
     'pants': shirt,
     'blanket': shirt,
-    'soap': shirt,
-    'toothpaste': shirt,
+    'soap': paper,
+    'toothpaste': paper,
     'jacket': shirt,
     'socks': shirt,
     'shirt': shirt,
@@ -38,35 +39,26 @@ const SupplyIconMap = {
 export default function SupplyList({ supplies }) {
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             {
                 supplies.map((supply) =>
 
-                    <div className="flex">
+                    <div className="flex border justify-between">
 
-                        <div className="flex items-center justify-center bg-red-600 w-20 text-center text-green-600">
+                        <div className="flex items-center justify-center bg-red-600 w-20 pl-4 text-center text-green-600">
                             <Image src={SupplyIconMap[supply.type]} alt="" width={20} height={20}></Image>
+
+
+                            {supply.quantity > 0 ?
+                                <div className="bg-blue-600 w-20 text-center text-green-600">
+                                    {SupplyNameMap[supply.type]}
+                                </div>
+                                :
+                                <div className="bg-blue-600 w-20 text-center text-red-600">
+                                    {SupplyNameMap[supply.type]}
+                                </div>
+                            }
                         </div>
-
-                        {supply.quantity > 0 ?
-                            <div className="bg-blue-600 w-20 text-center text-green-600">
-                                {SupplyNameMap[supply.type]}
-                            </div>
-                            :
-                            <div className="bg-blue-600 w-20 text-center text-red-600">
-                                {SupplyNameMap[supply.type]}
-                            </div>
-                        }
-
-                        {supply.quantity > 0 ?
-
-                            <div className="bg-blue-600 w-2 text-center text-green-600">
-                                :
-                            </div>
-                            :
-                            <div className="bg-blue-600 w-2 text-center text-red-600">
-                                :
-                            </div>}
 
                         {supply.quantity > 0 ?
                             <div className="bg-blue-600 w-14 text-center text-green-600">
