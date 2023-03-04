@@ -35,11 +35,11 @@ export function UserProvider({ children }) {
   );
 }
 
-export function useTasks() {
+export function useUser() {
   return useContext(UserContext);
 }
 
-export function useTasksDispatch() {
+export function useUserDispatch() {
   return useContext(UserDispatchContext);
 }
 
