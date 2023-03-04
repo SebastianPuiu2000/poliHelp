@@ -4,14 +4,12 @@ import { parse } from 'url';
 const jwtSecret: string = process.env.JWT_SECRET || '123456';
 const tokenExpirationInSeconds = 36000;
 
-export function getToken(url: string | undefined): string {
-    const token = parse(url || '', true).query.token;
-
-    if (!token) {
-        return '';
+export function getToken(authHeader: string | undefined): string | null {
+    if (!authHeader) {
+        return null;
     }
 
-    return token.toString();
+    return authHeader.split(' ')[1];
 };
 
 export function sign(id: any, role: string) {
