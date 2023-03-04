@@ -3,9 +3,10 @@ import * as bcrypt from 'bcrypt';
 
 export enum userRole {
     Delivery = 'delivery',
-    Donator = 'donator',
-    ShelterProvider = 'shelter provider',
-    Consumer = 'consumer'
+    Donator = 'donate',
+    ShelterProvider = 'provideShelter',
+    ShelterConsumer = 'needShelter',
+    SuppliesConsumer = 'needSupplies'
 };
 
 export type User = {
