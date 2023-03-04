@@ -29,12 +29,15 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   console.log(lat, ' ', lng);
 
-  const response = await fetch(`http://backend:3000/dropoff?lat=${lat}&lng=${lng}`)
+  const response = await fetch(`http://backend:3000/dropoff?lat=${lat}&lng=${lng}`, {
+    cache: 'no-cache'
+  })
 
   const data = await response.json();
 
-  console.log(data);
+  console.log(data.dropoffs.length);
 
   return NextResponse.json(data);
 }
 
+export const fetchCache = 'force-dynamic'

@@ -45,7 +45,7 @@ async function fetchDropoffPoints({ lat, lng }: Point) {
 
 export default function Dropoffs() {
   const user = useUser();
-  const [markers, setMarkers] = useState<Marker[]>([]);
+  const [markers, setMarkers] = useState<any>([]);
 
   const [selected, setSelected] = useState<Point | null>(null);
   const [center, setCenter] = useState<Point | null>(null);
@@ -74,7 +74,6 @@ export default function Dropoffs() {
   };
 
   const reload = async () => {
-    setSelected(null);
     if (center) {
       const data = await fetchDropoffPoints(center);
       if (data.success) {
@@ -85,6 +84,7 @@ export default function Dropoffs() {
         })));
       }
     }
+    setSelected(null);
   };
 
   const selectedMarker = selected !== null
