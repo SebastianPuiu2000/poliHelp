@@ -4,21 +4,13 @@ import { JwtPayload } from 'jsonwebtoken';
 import { userRole } from '../models/user.model';
 import { Supply, Dropoff, DropoffModel } from '../models/dropoff.model';
 import { RequestModel } from '../models/requests.model';
+import { isDesiredRole } from '../utils';
 
 export const dropoffRouter = express.Router();
 
 // Get dropoff points around a given location
 dropoffRouter.get('/', async (req, res) => {
-    let token = getToken(req.headers.authorization);
-    if (!token) {
-        return res.status(400).json({success: false, dropoffs: []});
-    }
-    
-    let payload: JwtPayload = verify(token);
-    if (payload.role !== userRole.Delivery) {
-        return res.status(401).json({success: false, dropoffs: []});
-    }
-    if (!payload || !req.query.lat || !req.query.lng) {
+    if (!req.query.lat || !req.query.lng) {
         return res.status(400).json({success: false, dropoffs: []});
     }
 
@@ -57,7 +49,7 @@ dropoffRouter.post('/', async (req, res) => {
     if (!payload) {
         return res.status(400).json({success: false});
     }
-    if (payload.role !== userRole.Delivery) {
+    if (!isDesiredRole(payload, userRole.Delivery)) {
         return res.status(401).json({success: false});
     }
 
@@ -81,8 +73,11 @@ dropoffRouter.put('/', async (req, res) => {
     if (!token) {
         return res.status(400).json({success: false});
     }
-
+    
     let payload: JwtPayload = verify(token);
+    if (!isDesiredRole(payload, userRole.Donator)) {
+        return res.status(401).json({success: false})
+    }
     if (!payload) {
         return res.status(400).json({success: false});
     }

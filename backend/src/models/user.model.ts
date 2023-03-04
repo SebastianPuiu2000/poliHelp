@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-// Index username (faster searches)
+// Index name (faster searches)
 UserSchema.index({ name: 1 });
 
 export const UserModel = mongoose.model('User', UserSchema);

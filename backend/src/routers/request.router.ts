@@ -2,23 +2,10 @@ import * as express from 'express';
 import { getToken, verify } from '../jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { Request, RequestModel } from '../models/requests.model';
+import { isDesiredRole, isTokenValid } from '../utils';
+import { userRole } from '../models/user.model';
 
 export const requestRouter = express.Router();
-
-//TODO: export this function in a utils .ts file (and use it in all routers)
-function isTokenValid(req: express.Request): boolean {
-    let token = getToken(req.headers.authorization);
-    if (!token) {
-        return false;
-    }
-    
-    let payload: JwtPayload = verify(token);
-    if (!payload) {
-        return false;
-    }
-
-    return true;
-}
 
 // Get by user id
 requestRouter.get('/user', async (req, res) => {
@@ -55,6 +42,9 @@ requestRouter.post('/', async (req, res) => {
         !request || !request.dropoffId || !request.lat || !request.lng) {
         return res.status(400).json({success: false});
     }
+    if (!isDesiredRole(payload, userRole.SuppliesConsumer)) {
+        return res.status(401).json({success: false});
+    }
 
     let createdRequest = await RequestModel.create({
         dropoffId: request.dropoffId,
@@ -74,8 +64,15 @@ requestRouter.post('/', async (req, res) => {
 requestRouter.put('/', async (req, res) => {
     let request: Request = req.body;
     let requestId = req.query.id;
-    if (!isTokenValid(req) || !requestId) {
+
+    let token = getToken(req.headers.authorization);
+    if (!token || !requestId) {
         return res.status(400).json({success: false});
+    }
+
+    let payload: JwtPayload = verify(token);
+    if (!isDesiredRole(payload, userRole.SuppliesConsumer)) {
+        return res.status(401).json({success: false});
     }
 
     let updatedRequest = await RequestModel.findByIdAndUpdate(requestId, request);
