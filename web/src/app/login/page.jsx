@@ -39,7 +39,10 @@ export default function Login() {
 
       userDispatch({
         type: 'login',
-        payload: userData
+        payload: {
+          token: data.jwt,
+          ...userData
+        }
       });
 
       router.replace('/');

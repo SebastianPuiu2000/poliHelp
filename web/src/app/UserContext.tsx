@@ -5,7 +5,8 @@ import { createContext, Dispatch, useContext, useReducer } from 'react';
 export interface User {
   id: string,
   name: string,
-  type: string
+  type: string,
+  token: string
 }
 
 export interface UserAction {

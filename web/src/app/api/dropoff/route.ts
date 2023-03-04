@@ -8,7 +8,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const response = await fetch('http://backend:3000/dropoff', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${payload.token}`
     },
     body: JSON.stringify(payload)
   })

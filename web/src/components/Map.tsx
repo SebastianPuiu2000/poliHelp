@@ -19,12 +19,13 @@ export type Center = 'onDevice' | Point;
 interface MapProps {
   center: Center,
   children: any,
+  onClick?: (ev: GoogleMapReact.ClickEventValue) => void,
   onCenter?: (position: GeolocationPosition) => Promise<void>
 }
 
 const defaultCenter = { lat: 49.09, lng: 29.31 };
 
-export default function Map({ center, onCenter, children }: MapProps) {
+export default function Map({ center, onCenter, children, onClick }: MapProps) {
   const urlKeys: BootstrapURLKeys = { key: 'AIzaSyAMAQc9IjmkELwZXJJ0JvDaNRQiSvCk9k4' };
   const [centerPoint, setCenterPoint] = useState(defaultCenter);
 
@@ -46,6 +47,7 @@ export default function Map({ center, onCenter, children }: MapProps) {
       defaultCenter={defaultCenter}
       center={centerPoint}
       defaultZoom={12}
+      onClick={onClick ? onClick : () => null}
     >
       {children}
     </GoogleMapReact>
