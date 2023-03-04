@@ -8,12 +8,6 @@ export interface Point {
   lng: number
 }
 
-export interface Marker {
-  point: Point,
-  color: string,
-  text: string
-}
-
 export type Center = 'onDevice' | Point;
 
 interface MapProps {

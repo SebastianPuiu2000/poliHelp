@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { User, useUser } from '../UserContext';
-import Map, { Marker, Point } from '../../components/Map';
+import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
 import googleMapReact from 'google-map-react';
 
-function deliveryButtons(user: User, selected: Point | null) {
+function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
 
   const handleCreate = async () => {
@@ -20,9 +20,9 @@ function deliveryButtons(user: User, selected: Point | null) {
       })
     });
 
-    const data = await response.json();
+    console.log(await response.json());
 
-    console.log(data);
+    reload();
   }
 
   return (
@@ -38,29 +38,53 @@ function deliveryButtons(user: User, selected: Point | null) {
   )
 }
 
+async function fetchDropoffPoints({ lat, lng }: Point) {
+  const response = await fetch(`/api/dropoff?lat=${lat}&lng=${lng}`);
+  return await response.json();
+}
+
 export default function Dropoffs() {
   const user = useUser();
   const [markers, setMarkers] = useState<Marker[]>([]);
 
   const [selected, setSelected] = useState<Point | null>(null);
+  const [center, setCenter] = useState<Point | null>(null);
 
-  const onCenter = async (position) => {
-    setTimeout(() => {
-      setMarkers([
-        {
-          point: { lat: 49.09, lng: 29.31 },
-          color: 'blue-500',
-          text: 'dropoff'
-        }
-      ]);
-    }, 1000)
+  const onCenter = async (position: GeolocationPosition) => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    setCenter({ lat, lng });
+    const data = await fetchDropoffPoints({ lat, lng });
+    if (data.success) {
+      setMarkers(data.dropoffs.map(({ dropoff, requests }: any) => ({
+        id: dropoff._id,
+        point: { lat: dropoff.lat, lng: dropoff.lng },
+        requests
+      })));
+    }
   };
 
   const handleClick = (ev: googleMapReact.ClickEventValue) => {
+    if (!user || user.role !== 'delivery') return;
+
     setSelected({
       lat: ev.lat,
       lng: ev.lng
     });
+  };
+
+  const reload = async () => {
+    setSelected(null);
+    if (center) {
+      const data = await fetchDropoffPoints(center);
+      if (data.success) {
+        setMarkers(data.dropoffs.map(({ dropoff, requests }: any) => ({
+          id: dropoff._id,
+          point: { lat: dropoff.lat, lng: dropoff.lng },
+          requests
+        })));
+      }
+    }
   };
 
   const selectedMarker = selected !== null
@@ -74,19 +98,19 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      {deliveryButtons(user, selected)}
+      {user ? deliveryButtons(user, selected, reload) : ''}
       <div className="w-3/4 h-3/4">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
             markers.map(marker =>
               <MapMarker
-                key={marker.text}
+                key={marker.id}
                 lat={marker.point.lat}
                 lng={marker.point.lng}
-                color={marker.color}
+                color='blue-500'
               >
                 <span className='text-slate-900 text-lg'>
-                  {marker.text}
+                  Dropoff
                 </span>
               </MapMarker>
             )
