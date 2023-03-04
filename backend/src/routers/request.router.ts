@@ -38,8 +38,7 @@ requestRouter.post('/', async (req, res) => {
     
     let request: Request = req.body;
     let payload: JwtPayload = verify(token);
-    if (!payload ||
-        !request || !request.dropoffId || !request.lat || !request.lng) {
+    if (!payload || !request || !request.dropoffId || !request.lat || !request.lng) {
         return res.status(400).json({success: false});
     }
     if (!isDesiredRole(payload, userRole.SuppliesConsumer)) {

@@ -46,16 +46,12 @@ dropoffRouter.post('/', async (req, res) => {
     }
 
     let payload: JwtPayload = verify(token);
-    if (!payload) {
+    let dropoff: Dropoff = req.body;
+    if (!payload || !dropoff || !dropoff.lat || !dropoff.lng) {
         return res.status(400).json({success: false});
     }
     if (!isDesiredRole(payload, userRole.Delivery)) {
         return res.status(401).json({success: false});
-    }
-
-    let dropoff: Dropoff = req.body;
-    if (!dropoff || !dropoff.lat || !dropoff.lng) {
-        return res.status(400).json({success: false});
     }
 
     await DropoffModel.create({
@@ -75,16 +71,12 @@ dropoffRouter.put('/', async (req, res) => {
     }
     
     let payload: JwtPayload = verify(token);
+    let body: {id: any, supplies: Supply[]} = req.body;
+    if (!payload || !body || !body.id || !body.supplies) {
+        return res.status(400).json({success: false});
+    }
     if (!isDesiredRole(payload, userRole.Donator)) {
         return res.status(401).json({success: false})
-    }
-    if (!payload) {
-        return res.status(400).json({success: false});
-    }
-
-    let body: {id: any, supplies: Supply[]} = req.body;
-    if (!body || !body.id || !body.supplies) {
-        return res.status(400).json({success: false});
     }
 
     let updatedDropoff = await DropoffModel.findByIdAndUpdate(body.id, {
