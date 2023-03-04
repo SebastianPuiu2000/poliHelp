@@ -8,7 +8,7 @@ export const userRouter = express.Router();
 // Register
 userRouter.post('/', async (req, res) => {
     let user: User = req.body;
-    if (!user || !user.name || !user.username || !user.password || !user.role) {
+    if (!user || !user.name || !user.password || !user.role) {
         return res
             .status(400)
             .json({success: false, message: 'Bad request'});
@@ -29,14 +29,14 @@ userRouter.post('/', async (req, res) => {
 
 // Sign-in
 userRouter.post('/auth', async (req, res) => {
-    let body: {username: string, password: string} = req.body;
-    if (!body || ! body.username || !body.password) {
+    let body: {name: string, password: string} = req.body;
+    if (!body || ! body.name || !body.password) {
         return res
             .status(400)
             .json({success: false, jwt: ''});
     }
 
-    const mongoUser = await UserModel.findOne({username: body.username});
+    const mongoUser = await UserModel.findOne({name: body.name});
 
     if (!mongoUser) {
         return res

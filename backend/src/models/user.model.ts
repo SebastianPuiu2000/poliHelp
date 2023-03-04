@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: true,
         unique: true,
         trim: true,
         minlength: 3
@@ -39,7 +38,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Index username (faster searches)
-userSchema.index({ username: 1 });
+userSchema.index({ name: 1 });
 
 export const UserModel = mongoose.model('User', userSchema);
 
