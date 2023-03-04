@@ -8,11 +8,11 @@ export type Supply = {
 export type Dropoff = {
     userId: any,
     lat: number,
-    lgn: number,
+    lng: number,
     supplies: Supply[]
 };
 
-const SuppliesSchema = new mongoose.Schema({
+export const SuppliesSchema = new mongoose.Schema({
     type: String,
     quantity: Number
 });
@@ -26,7 +26,7 @@ export const DropoffSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    lgn: {
+    lng: {
         type: Number,
         required: true
     },

@@ -3,6 +3,7 @@ import { getToken, verify } from '../jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { userRole } from '../models/user.model';
 import { Supply, Dropoff, DropoffModel } from '../models/dropoff.model';
+import { RequestModel } from '../models/requests.model';
 
 export const dropoffRouter = express.Router();
 
@@ -17,21 +18,32 @@ dropoffRouter.get('/', async (req, res) => {
     if (payload.role !== userRole.Delivery) {
         return res.status(401).json({success: false, dropoffs: []});
     }
-    if (!payload || !req.query.lat || !req.query.lgn) {
+    if (!payload || !req.query.lat || !req.query.lng) {
         return res.status(400).json({success: false, dropoffs: []});
     }
 
     let requestLat = Number(req.query.lat);
-    let requestLgn = Number(req.query.lgn);
+    let requestLng = Number(req.query.lng);
 
     let nearbyDropoffs = await DropoffModel.find({
         $and: [
             {lat: {$gte: requestLat - 1, $lte: requestLat + 1}},
-            {lgn: {$gte: requestLgn - 1, $lte: requestLgn + 1}}
+            {lng: {$gte: requestLng - 1, $lte: requestLng + 1}}
         ]
     });
 
-    return res.json({success: true, dropoffs: nearbyDropoffs});
+    // Get matching requests for each nearby dropoff
+    let response = await Promise.all(nearbyDropoffs.map(async nearbyDropoff => {
+        let associatedRequests = await RequestModel.find({
+            dropoffId: nearbyDropoff._id
+        });
+        return {
+            dropoff: nearbyDropoff,
+            requests: associatedRequests
+        };
+    }));
+
+    return res.json({success: true, dropoffs: response});
 });
 
 // Add dropoff
@@ -50,14 +62,14 @@ dropoffRouter.post('/', async (req, res) => {
     }
 
     let dropoff: Dropoff = req.body;
-    if (!dropoff || !dropoff.lat || !dropoff.lgn) {
+    if (!dropoff || !dropoff.lat || !dropoff.lng) {
         return res.status(400).json({success: false});
     }
 
     await DropoffModel.create({
         userId: payload.id,
         lat: dropoff.lat,
-        lgn: dropoff.lgn
+        lng: dropoff.lng
     });
 
     return res.json({success: true});
@@ -80,9 +92,12 @@ dropoffRouter.put('/', async (req, res) => {
         return res.status(400).json({success: false});
     }
 
-    await DropoffModel.findByIdAndUpdate(body.id, {
+    let updatedDropoff = await DropoffModel.findByIdAndUpdate(body.id, {
         supplies: body.supplies
     });
+    if (!updatedDropoff) {
+        return res.status(400).json({success: false});
+    }
 
     return res.json({success: true});
 });
