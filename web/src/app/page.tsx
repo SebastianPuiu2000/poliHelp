@@ -1,7 +1,13 @@
+import Navbar from "../components/NavbarH";
+
 export default function Home() {
+
   return (
-    <main className="flex items-center bg-red-700 justify-center">
-      Hello World!
-    </main>
+    <div>
+      <Navbar></Navbar>
+      <div className="bg-violet-900 h-screen">
+        abc
+      </div>
+    </div>
   );
 }

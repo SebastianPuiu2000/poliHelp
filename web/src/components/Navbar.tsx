@@ -1,10 +1,13 @@
 "use client"
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
 
+    const router = useRouter();
+    
     return (
       <div className="flex items-center justify-between p-7 bg-black">
-        <h1 className="text-violet-900 text-4xl font-bold cursor-pointer"> poliHELP</h1>
+        <button className="text-violet-900 text-4xl font-bold cursor-pointer"onClick={() => router.push('/')}> poliHELP</button>
       </div>
     );
   }
