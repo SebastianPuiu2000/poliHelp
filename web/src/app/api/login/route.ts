@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const payload = req.body;
+  const payload = await req.json();
 
   console.log(payload);
 
   const response = await fetch('http://backend:3000/user/auth', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(payload)
   })
 

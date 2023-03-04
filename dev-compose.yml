@@ -10,6 +10,8 @@ services:
       - 81:3000
     volumes:
       - ./web/src:/app/src
+    links:
+      - backend
 
   backend:
     container_name: backend
@@ -22,6 +24,8 @@ services:
       - 3000:3000
     volumes:
       - ./backend/src:/app/src
+    links:
+      - mongo
 
   mongo:
     container_name: mongodb
