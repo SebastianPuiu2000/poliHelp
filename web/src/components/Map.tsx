@@ -25,7 +25,7 @@ interface MapProps {
 const defaultCenter = { lat: 49.09, lng: 29.31 };
 
 export default function Map({ center, onCenter, children }: MapProps) {
-  const urlKeys: BootstrapURLKeys = { key: '' };
+  const urlKeys: BootstrapURLKeys = { key: 'AIzaSyAMAQc9IjmkELwZXJJ0JvDaNRQiSvCk9k4' };
   const [centerPoint, setCenterPoint] = useState(defaultCenter);
 
   useEffect(() => {
