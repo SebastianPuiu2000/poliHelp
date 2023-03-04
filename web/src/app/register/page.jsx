@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from 'next/navigation';
 import Navbar from "../../components/Navbar";
 import { useState } from "react";
 import help from "../../../public/help.png"
@@ -7,9 +8,9 @@ import Image from "next/image";
 import { useUserDispatch } from "../UserContext";
 import { decode } from "jsonwebtoken";
 
-
-export default function Register() {
+export default function () {
   const userDispatch = useUserDispatch();
+  const router = useRouter();
 
   const [firstOption, setFirstOption] = useState(null);
   const [secondOption, setSecondOption] = useState(null);
@@ -50,7 +51,13 @@ export default function Register() {
       const loginData = await loginResponse.json();
 
       const userData = decode(loginData.jwt)
-      console.log(userData);
+
+      userDispatch({
+        action: 'login',
+        payload: userData
+      });
+
+      router.replace('/');
     }
   }
 

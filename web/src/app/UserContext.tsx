@@ -3,6 +3,7 @@
 import { createContext, Dispatch, useContext, useReducer } from 'react';
 
 interface User {
+  id: string,
   name: string,
   type: string
 }
@@ -13,8 +14,8 @@ interface UserAction {
 }
 
 enum UserActionType {
-  login,
-  logout
+  login = 'login',
+  logout = 'logout'
 }
 
 const UserContext = createContext<User | null>(null);

@@ -1,15 +1,16 @@
-"use client"
-import { useUser } from "../UserContext"
+'use client'
+
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
 import help from "../../../public/help.png";
-import handshake from "../../../public/handshake.png";
 import { useState } from "react";
-
+import { useUserDispatch } from "../UserContext";
+import { decode } from "jsonwebtoken";
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
-
-  const user = useUser();
+  const userDispatch = useUserDispatch();
+  const router = useRouter();
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -32,6 +33,17 @@ export default function Login() {
     const data = await response.json();
 
     console.log(data);
+
+    if (data.success) {
+      const userData = decode(data.jwt)
+
+      userDispatch({
+        action: 'login',
+        payload: userData
+      });
+
+      router.replace('/');
+    }
   }
 
   return (
@@ -63,10 +75,6 @@ export default function Login() {
         >
           Submit
         </button>
-      </div>
-
-      <div className="bg-black h-32">
-        sadad
       </div>
     </div>
   );
