@@ -11,8 +11,8 @@ export function getToken(authHeader: string | undefined): string | null {
     return authHeader.split(' ')[1];
 };
 
-export function sign(id: any, role: string) {
-    return jwt.sign({id: id, role: role}, jwtSecret, {
+export function sign(id: any, name: string, role: string) {
+    return jwt.sign({id, name, role}, jwtSecret, {
         expiresIn: tokenExpirationInSeconds,
     });
 };

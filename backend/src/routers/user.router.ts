@@ -46,7 +46,7 @@ userRouter.post('/auth', async (req, res) => {
 
     const passwordCorrect = await bcrypt.compare(body.password, mongoUser.password);
     if (passwordCorrect) {
-      const token = sign(mongoUser._id, mongoUser.role);
+      const token = sign(mongoUser._id, mongoUser.name, mongoUser.role);
 
       return res.json({success: true, jwt: token});
     }

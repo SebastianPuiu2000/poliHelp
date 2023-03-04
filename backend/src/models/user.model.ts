@@ -15,7 +15,7 @@ export type User = {
     role: userRole
 };
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -33,9 +33,9 @@ const userSchema = new mongoose.Schema({
 });
 
 // Index username (faster searches)
-userSchema.index({ name: 1 });
+UserSchema.index({ name: 1 });
 
-export const UserModel = mongoose.model('User', userSchema);
+export const UserModel = mongoose.model('User', UserSchema);
 
 export async function createUser(user: User): Promise<string> {
     const salt = await bcrypt.genSalt(10);
