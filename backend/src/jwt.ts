@@ -1,5 +1,4 @@
 import * as jwt from 'jsonwebtoken';
-import { parse } from 'url';
 
 const jwtSecret: string = process.env.JWT_SECRET || '123456';
 const tokenExpirationInSeconds = 36000;
