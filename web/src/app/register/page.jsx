@@ -67,59 +67,207 @@ export default function () {
         {/* Group 1 */}
         <div className="w-60 my-5">
 
-          <button className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={handleProvideHelpClick}
-          >
-            I want to help!
-          </button>
+          {/* Fie e provide, fie e require, fie e niciuna */}
+          {firstOption === "provide" ?
+            <div>
+              <button className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline outline-white"
+                onClick={handleProvideHelpClick}
+              >
+                I want to help!
+              </button>
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                onClick={handleNeedHelpClick}
+              >
+                I need help!
+              </button>
+            </div>
+            :
+            firstOption === "require" ?
+              <div>
+                <button className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                  onClick={handleProvideHelpClick}
+                >
+                  I want to help!
+                </button>
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline outline-white"
+                  onClick={handleNeedHelpClick}
+                >
+                  I need help!
+                </button>
+              </div>
+              :
+              <div>
+                <button className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                  onClick={handleProvideHelpClick}
+                >
+                  I want to help!
+                </button>
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                  onClick={handleNeedHelpClick}
+                >
+                  I need help!
+                </button>
+              </div>
+          }
 
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={handleNeedHelpClick}
-          >
-            I need help!
-          </button>
         </div>
 
         {/* Group 2.1 */}
         <div className="w-60 my-10" hidden={firstOption !== 'provide'}>
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={() => setSecondOption('donate')}
-          >
-            I want to make donations
-          </button>
 
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={() => setSecondOption('delivery')}
-          >
-            I want to deliver donations
-          </button>
+          {secondOption === "donate" ?
+            <div>
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline"
+                onClick={() => setSecondOption('donate')}
+              >
+                I want to make donations
+              </button>
 
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={() => setSecondOption('provideShelter')}
-          >
-            I want to provide shelter
-          </button>
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                onClick={() => setSecondOption('delivery')}
+              >
+                I want to deliver donations
+              </button>
+
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                onClick={() => setSecondOption('provideShelter')}
+              >
+                I want to provide shelter
+              </button>
+            </div>
+            :
+            secondOption === "delivery" ?
+              <div>
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                  onClick={() => setSecondOption('donate')}
+                >
+                  I want to make donations
+                </button>
+
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline"
+                  onClick={() => setSecondOption('delivery')}
+                >
+                  I want to deliver donations
+                </button>
+
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                  onClick={() => setSecondOption('provideShelter')}
+                >
+                  I want to provide shelter
+                </button>
+              </div>
+              :
+              secondOption === "provideShelter" ?
+                <div>
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                    onClick={() => setSecondOption('donate')}
+                  >
+                    I want to make donations
+                  </button>
+
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                    onClick={() => setSecondOption('delivery')}
+                  >
+                    I want to deliver donations
+                  </button>
+
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline"
+                    onClick={() => setSecondOption('provideShelter')}
+                  >
+                    I want to provide shelter
+                  </button>
+                </div>
+                :
+                <div>
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                    onClick={() => setSecondOption('donate')}
+                  >
+                    I want to make donations
+                  </button>
+
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                    onClick={() => setSecondOption('delivery')}
+                  >
+                    I want to deliver donations
+                  </button>
+
+                  <button
+                    className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                    onClick={() => setSecondOption('provideShelter')}
+                  >
+                    I want to provide shelter
+                  </button>
+                </div>
+          }
         </div>
 
         {/* Group 2.2 */}
         <div className="w-60 my-10" hidden={firstOption !== 'require'}>
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={() => setSecondOption('needSupplies')}
-          >
-            I need supplies
-          </button>
 
-          <button
-            className="text-center text-white bg-black my-2 p-5 w-full rounded-full hover:outline"
-            onClick={() => setSecondOption('needShelter')}
-          >
-            I need shelter
-          </button>
+          {secondOption === "needSupplies" ?
+            <div>
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline outline-white"
+                onClick={() => setSecondOption('needSupplies')}
+              >
+                I need supplies
+              </button>
+
+              <button
+                className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                onClick={() => setSecondOption('needShelter')}
+              >
+                I need shelter
+              </button>
+            </div>
+            :
+            secondOption === "needShelter" ?
+              <div>
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full opacity-30"
+                  onClick={() => setSecondOption('needSupplies')}
+                >
+                  I need supplies
+                </button>
+
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full outline outline-white"
+                  onClick={() => setSecondOption('needShelter')}
+                >
+                  I need shelter
+                </button>
+              </div>
+              :
+              <div>
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                  onClick={() => setSecondOption('needSupplies')}
+                >
+                  I need supplies
+                </button>
+
+                <button
+                  className="text-center text-white bg-black my-2 p-5 w-full rounded-full"
+                  onClick={() => setSecondOption('needShelter')}
+                >
+                  I need shelter
+                </button>
+              </div>
+          }
         </div>
 
         {/* Group 3 */}
