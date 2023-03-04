@@ -28,15 +28,6 @@ services:
       - mongodata:/data/db
     command: mongod --quiet --logpath /dev/null
 
-  postgres:
-    container_name: postgresql
-    image: postgres:latest
-    volumes:
-      - postgresdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: postgres
 
 volumes:
   mongodata:
-  postgresdata:
