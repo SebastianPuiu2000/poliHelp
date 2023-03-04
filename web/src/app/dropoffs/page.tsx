@@ -5,6 +5,12 @@ import { useUser } from '../UserContext';
 import Map, { Marker } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
 
+function deliveryButtons() {
+  return (
+    <div></div>
+  )
+}
+
 export default function Dropoffs() {
   const user = useUser();
   const [markers, setMarkers] = useState<Marker[]>([]);
@@ -23,6 +29,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
+      { deliveryButtons() }
       <div className="w-3/4 h-3/4">
         <Map center={'onDevice'} onCenter={onCenter}>
           {
@@ -41,10 +48,6 @@ export default function Dropoffs() {
           }
         </Map>
       </div>
-      {
-        user?.type === 'delivery' ??
-          <button>create dropoff</button>
-      }
     </div>
   );
 }

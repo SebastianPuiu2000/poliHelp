@@ -62,7 +62,7 @@ export default function () {
 
   return (
     <div className="bg-violet-900">
-      <div className="flex flex-col items-center justify-evenly bg-violet-900 m-10">
+      <div className="flex flex-col items-center justify-evenly bg-violet-900">
 
         {/* Group 1 */}
         <div className="w-60 my-5">

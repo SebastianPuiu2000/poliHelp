@@ -2,18 +2,18 @@
 
 import { createContext, Dispatch, useContext, useReducer } from 'react';
 
-interface User {
+export interface User {
   id: string,
   name: string,
   type: string
 }
 
-interface UserAction {
+export interface UserAction {
   type: UserActionType,
   payload: any
 }
 
-enum UserActionType {
+export enum UserActionType {
   login = 'login',
   logout = 'logout'
 }
