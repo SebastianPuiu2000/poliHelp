@@ -1,7 +1,6 @@
 import Navbar from "../components/NavbarH";
 
 export default function Home() {
-
   return (
     <div>
       <Navbar></Navbar>
