@@ -16,6 +16,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./backend
+    environment:
+      - JWT_SECRET=super_duper_secret
     ports:
       - 3000:3000
     volumes:

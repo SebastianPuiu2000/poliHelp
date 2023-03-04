@@ -18,11 +18,11 @@ function main() {
 
   server.use(bodyParser.json());
 
+  server.use('/user', userRouter);
+  
   server.listen(port, () => {
       console.log(`Server started on port ${port}`);
   });
-
-  server.use('/user', userRouter);
 }
 
 main();
