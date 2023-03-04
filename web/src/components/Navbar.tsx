@@ -10,7 +10,7 @@ function userButtons(router) {
         className="text-white pr-4"
         onClick={() => router.push('/login')}
       >
-        Sing In
+        Sign In
       </button>
       <button
         className="text-white rounded bg-violet-900 py-2 px-6"
