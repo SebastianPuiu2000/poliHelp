@@ -57,7 +57,7 @@ async function fetchDropoffPoints({ lat, lng }: Point, setMarkers: any) {
   }
 }
 
-function makeDonation(user: User | null, dropoffId: string, reload) {
+function makeDonation(user: User | null, dropoffId: string, reload: Function) {
   if (!user || user.role !== 'donate') return;
 
   const handleClick = async (supplies) => {
@@ -77,7 +77,7 @@ function makeDonation(user: User | null, dropoffId: string, reload) {
   )
 }
 
-function makeRequest(user: User | null, dropoffId: string, center: Point | null, reload) {
+function makeRequest(user: User | null, dropoffId: string, center: Point | null, reload: Function) {
   if (!user || user.role !== 'needSupplies') return;
 
   const handleClick = async (supplies) => {
