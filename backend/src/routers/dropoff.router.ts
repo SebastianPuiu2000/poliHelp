@@ -84,6 +84,9 @@ dropoffRouter.put('/', async (req, res) => {
         return res.status(400).json({success: false});
     }
     for (let supply of body.supplies) {
+        if (supply.quantity <= 0) {
+            continue;
+        }
         let found = false;
         for (let mongoSupply of mongoDropoff.supplies) {
             if (supply.type === mongoSupply.type) {
