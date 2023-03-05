@@ -12,7 +12,7 @@ export default function MapMarker({ children, color, onClick }: any) {
         onClick={onClick ? onClick : () => setShowTooltip(!showTooltip)}
       />
       <div
-        className={`relative top-2 right-28 w-64 p-2 bg-slate-100 rounded-md border-2 border-${color} max-h-96 overflow-y-auto`}
+        className={`relative top-2 right-28 w-64 p-2 bg-mantis-50 rounded-md border-2 border-${color} max-h-96 overflow-y-auto`}
         hidden={!showTooltip}
       >
         {children}

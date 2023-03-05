@@ -71,7 +71,7 @@ function makeDonation(user: User | null, dropoffId: string, reload: Function) {
   };
 
   return (
-    <div className='w-full flex flex-row gap-6 justify-center border-t border-slate-300 pt-2 mt-2'>
+    <div className='w-full flex flex-row gap-6 justify-center border-t border-mantis-300 pt-2 mt-2'>
       <SupplyCreate onClick={handleClick}/>
     </div>
   )
@@ -96,7 +96,7 @@ function makeRequest(user: User | null, dropoffId: string, center: Point | null,
   };
 
   return (
-    <div className='flex flex-row gap-6 max-w-sm justify-center border-t border-slate-300 pt-2 mt-2'>
+    <div className='flex flex-row gap-6 max-w-sm justify-center border-t border-mantis-300 pt-2 mt-2'>
       <RequestCreate onClick={handleClick}/>
     </div>
   )
@@ -148,7 +148,7 @@ export default function Dropoffs() {
 
     const deliverButton = (id) => (user && user.role === 'delivery'
       ? <button
-        className='w-full flex flex-row justify-center text-xl text-red-500'
+        className='w-full flex flex-row justify-center text-xl text-mahogany-500'
         onClick={() => router.push(`/deliver/${id}`)}
       >
         Deliver
@@ -156,7 +156,7 @@ export default function Dropoffs() {
       : '');
 
     return (
-      <div className='border-t border-slate-300 pt-2 mt-2'>
+      <div className='border-t border-mantis-300 pt-2 mt-2'>
         {
           marker.requests.map(request =>
             <div key={request._id}>
@@ -186,7 +186,7 @@ export default function Dropoffs() {
                 lng={marker.point.lng}
                 color={'mantis-600'}
               >
-                <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
+                <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
                   Dropoff
                 </span>
                 <SupplyList supplies={marker.supplies} request={false}/>
