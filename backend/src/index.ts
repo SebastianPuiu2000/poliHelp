@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { userRouter } from './routers/user.router';
 import { dropoffRouter } from './routers/dropoff.router';
 import { requestRouter } from './routers/request.router';
+import { shelterRouter } from './routers/shelters.router';
 
 const server = express();
 
@@ -23,6 +24,7 @@ function main() {
   server.use('/user', userRouter);
   server.use('/dropoff', dropoffRouter);
   server.use('/request', requestRouter);
+  server.use('/shelter', shelterRouter);
   
   server.listen(port, () => {
       console.log(`Server started on port ${port}`);

@@ -29,6 +29,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: userRole
+    },
+    shelterId: {            // only for ShelterConsumer; id of shelter he's currently in
+        type: String,
+        required: false,
+        default: undefined
     }
 });
 
