@@ -5,6 +5,7 @@ import { User, useUser } from '../UserContext';
 import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
 import googleMapReact from 'google-map-react';
+import SupplyList from '../../components/SupplyList';
 
 function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
@@ -38,9 +39,19 @@ function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   )
 }
 
-async function fetchDropoffPoints({ lat, lng }: Point) {
+async function fetchDropoffPoints({ lat, lng }: Point, setMarkers: any) {
   const response = await fetch(`/api/dropoff?lat=${lat}&lng=${lng}`);
-  return await response.json();
+  const data= await response.json();
+  if (data.success) {
+    setMarkers(data.dropoffs.map(({ dropoff, requests }: any) => {
+      return {
+        id: dropoff._id,
+        point: { lat: dropoff.lat, lng: dropoff.lng },
+        supplies: dropoff.supplies,
+        requests
+      }
+    }));
+  }
 }
 
 export default function Dropoffs() {
@@ -54,14 +65,7 @@ export default function Dropoffs() {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     setCenter({ lat, lng });
-    const data = await fetchDropoffPoints({ lat, lng });
-    if (data.success) {
-      setMarkers(data.dropoffs.map(({ dropoff, requests }: any) => ({
-        id: dropoff._id,
-        point: { lat: dropoff.lat, lng: dropoff.lng },
-        requests
-      })));
-    }
+    await fetchDropoffPoints({ lat, lng }, setMarkers);
   };
 
   const handleClick = (ev: googleMapReact.ClickEventValue) => {
@@ -75,14 +79,7 @@ export default function Dropoffs() {
 
   const reload = async () => {
     if (center) {
-      const data = await fetchDropoffPoints(center);
-      if (data.success) {
-        setMarkers(data.dropoffs.map(({ dropoff, requests }: any) => ({
-          id: dropoff._id,
-          point: { lat: dropoff.lat, lng: dropoff.lng },
-          requests
-        })));
-      }
+      await fetchDropoffPoints(center, setMarkers);
     }
     setSelected(null);
   };
@@ -94,7 +91,24 @@ export default function Dropoffs() {
       lng={selected.lng}
       color={'green-500'}
       onClick={() => setSelected(null)}
-    /> : <div></div>;
+    /> : '';
+
+  let deliverRequests = (marker) => {
+    /* if (!user || user.role !== 'deliver') return ''; */
+
+    return (
+      <div className='border-t border-slate-300 pt-2 mt-2'>
+        {
+          marker.requests.map(request =>
+            <SupplyList supplies={request.supplies} request key={request._id}/>
+          )
+        }
+        <button className='w-full flex flex-row justify-center text-xl text-red-500'>
+          Deliver
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
@@ -109,9 +123,11 @@ export default function Dropoffs() {
                 lng={marker.point.lng}
                 color='blue-500'
               >
-                <span className='text-slate-900 text-lg'>
+                <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
                   Dropoff
                 </span>
+                <SupplyList supplies={marker.supplies} />
+                { deliverRequests(marker) }
               </MapMarker>
             )
           }
