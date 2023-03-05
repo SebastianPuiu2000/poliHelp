@@ -1,13 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { User, useUser } from '../UserContext';
 import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
 import googleMapReact from 'google-map-react';
 
-function providerButtons(user: User, selected: Point | null, reload: Function) {
+function ProviderButton(user: User | null, selected: Point | null, reload: Function) {
   const [value, setValue] = useState('0');
+
+  if (!user || user.role !== 'provideShelter') return;
 
   const valid = selected !== null && parseInt(value) > 0;
 
@@ -81,14 +83,14 @@ export default function Dropoffs() {
     fetchShelterPoints(setMarkers);
   }, []);
 
-  const handleClick = (ev: googleMapReact.ClickEventValue) => {
+  const handleClick = useCallback((ev: googleMapReact.ClickEventValue) => {
     if (!user || user.role !== 'provideShelter') return;
 
     setSelected({
       lat: ev.lat,
       lng: ev.lng
     });
-  };
+  }, [user]);
 
   const reload = async () => {
     await fetchShelterPoints(setMarkers);
@@ -106,7 +108,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      {user && user.role === 'provideShelter' ? providerButtons(user, selected, reload) : ''}
+      {ProviderButton(user, selected, reload)}
       <div className="w-3/4 h-3/4">
         <Map center={'onDevice'} onClick={handleClick}>
           {
@@ -132,7 +134,7 @@ export default function Dropoffs() {
               </MapMarker>
             )
           }
-          { selectedMarker }
+          {selectedMarker}
         </Map>
       </div>
     </div>

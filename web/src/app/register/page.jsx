@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useUserDispatch } from "../UserContext";
 import { decode } from "jsonwebtoken";
 
-export default function () {
+export default function Register() {
   const userDispatch = useUserDispatch();
   const router = useRouter();
 

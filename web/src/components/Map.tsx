@@ -33,7 +33,7 @@ export default function Map({ center, onCenter, children, onClick }: MapProps) {
         if (onCenter) onCenter(position);
       });
     }
-  }, []);
+  }, [center, onCenter]);
 
   return (
     <GoogleMapReact

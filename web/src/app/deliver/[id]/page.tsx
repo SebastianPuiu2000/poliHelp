@@ -1,7 +1,7 @@
 'use client';
 
 import Map, { Point } from "../../../components/Map";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import MapMarker from "@/components/MapMarker";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/UserContext";
@@ -27,13 +27,13 @@ export default function Page({ params }) {
         router.back();
       }
     });
-  }, []);
+  }, [id, router]);
 
-  const onCenter = async (position: GeolocationPosition) => {
+  const onCenter = useCallback(async (position: GeolocationPosition) => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     setCenter({ lat, lng });
-  }
+  }, []);
 
   const handleClick = async () => {
     setButtonActive(false);

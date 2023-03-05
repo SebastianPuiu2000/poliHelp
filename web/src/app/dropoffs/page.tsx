@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { User, useUser } from '../UserContext';
 import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
@@ -111,12 +111,12 @@ export default function Dropoffs() {
   const [selected, setSelected] = useState<Point | null>(null);
   const [center, setCenter] = useState<Point | null>(null);
 
-  const onCenter = async (position: GeolocationPosition) => {
+  const onCenter = useCallback(async (position: GeolocationPosition) => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     setCenter({ lat, lng });
     await fetchDropoffPoints({ lat, lng }, setMarkers);
-  };
+  }, [setMarkers]);
 
   const handleClick = (ev: googleMapReact.ClickEventValue) => {
     if (!user || user.role !== 'delivery') return;
@@ -185,7 +185,7 @@ export default function Dropoffs() {
                 <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
                   Dropoff
                 </span>
-                <SupplyList supplies={marker.supplies} />
+                <SupplyList supplies={marker.supplies} request={false}/>
                 { deliverRequests(user, marker, router) }
                 { makeDonation(user, marker.id, reload) }
                 { makeRequest(user, marker.id, center, reload) }
