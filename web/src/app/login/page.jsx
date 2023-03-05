@@ -70,7 +70,7 @@ export default function Login() {
           </div>
         </form>
 
-        <button className="bg-black text-white w-28 text-center rounded-full py-2 px-1 mb-8 hover:outline"
+        <button className="bg-black text-white w-28 text-center rounded py-2 px-1 mb-8 hover:outline"
           onClick={handleSubmit}
         >
           Submit

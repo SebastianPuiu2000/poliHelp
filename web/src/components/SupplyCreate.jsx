@@ -32,8 +32,8 @@ export default function SupplyCreate({ onClick }) {
 
       <div hidden={!donation} className='mt-2 w-full'>
         <div className='w-full flex flex-row items-center justify-center'>
-          <div className='w-54'>
-            <SearchBar setSupply={setSupply} />
+          <div className='w-54 text-sm'>
+            <SearchBar setSupply={setSupply} value={supply}/>
           </div>
           <input
             className="text-center rounded-md bg-slate-100 border border-slate-400 text-black outline-none w-10 h-8 ml-2"

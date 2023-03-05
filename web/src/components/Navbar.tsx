@@ -55,7 +55,7 @@ export default function Navbar() {
         className="text-violet-900 text-4xl font-bold cursor-pointer"
         onClick={() => router.push('/')}
       >
-        poliHelp
+        poli<b>Help</b>
       </button>
         { user === null ? userButtons(router) : userInfo(user, userDispatch) }
     </div>
