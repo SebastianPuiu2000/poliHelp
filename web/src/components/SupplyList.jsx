@@ -39,7 +39,7 @@ export default function SupplyList({ supplies, request }) {
     <div className="flex flex-col w-full">
       {
         supplies.map((supply) =>
-          <div className="flex border border-slate-300 rounded items-center justify-between my-1">
+          <div key={supply.type} className="flex border border-slate-300 rounded items-center justify-between my-1">
 
             <div className="flex items-center justify-center w-20 pl-4 text-center text-green-600 h-6 text-lg">
               <Image src={SupplyIconMap[supply.type]} alt="" width={20} height={20}></Image>

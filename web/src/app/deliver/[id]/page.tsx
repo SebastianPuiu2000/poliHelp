@@ -4,8 +4,10 @@ import Map, { Point } from "../../../components/Map";
 import { useEffect, useState } from "react";
 import MapMarker from "@/components/MapMarker";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/UserContext";
 
 export default function Page({ params }) {
+  const user = useUser();
   const id = params.id;
 
   const router = useRouter();
@@ -33,8 +35,20 @@ export default function Page({ params }) {
     setCenter({ lat, lng });
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setButtonActive(false);
+    const response = await fetch('/api/completeRequest', {
+      method: 'POST',
+      body: JSON.stringify({
+        token: user?.token,
+        requestId: id
+      })
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    router.back();
   };
 
   const positionMarker = center !== null

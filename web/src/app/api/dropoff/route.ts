@@ -39,3 +39,24 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   return NextResponse.json(data);
 }
+
+export async function PUT(req: NextRequest): Promise<NextResponse> {
+  const payload = await req.json();
+
+  console.log(payload);
+
+  const response = await fetch('http://backend:3000/dropoff', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${payload.token}`
+    },
+    body: JSON.stringify(payload)
+  })
+
+  const data = await response.json();
+
+  console.log(data);
+
+  return NextResponse.json(data);
+}

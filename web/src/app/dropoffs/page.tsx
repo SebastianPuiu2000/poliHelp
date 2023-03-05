@@ -7,6 +7,7 @@ import MapMarker from '../../components/MapMarker';
 import googleMapReact from 'google-map-react';
 import SupplyList from '../../components/SupplyList';
 import { useRouter } from 'next/navigation';
+import SupplyCreate from '../../components/SupplyCreate';
 
 function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
@@ -55,6 +56,36 @@ async function fetchDropoffPoints({ lat, lng }: Point, setMarkers: any) {
   }
 }
 
+function makeDonation(user: User | null, dropoffId: string, reload) {
+  if (!user || user.role !== 'donate') return;
+
+  const handleClick = async (supplies) => {
+    const response = await fetch('/api/dropoff', {
+      method: 'PUT',
+      body: JSON.stringify({ id: dropoffId, token: user.token, supplies })
+    });
+    const data = await response.json();
+    console.log(data);
+    reload();
+  };
+
+  return (
+    <div className='w-full flex flex-row gap-6 justify-center border-t border-slate-300 pt-2 mt-2'>
+      <SupplyCreate onClick={handleClick}/>
+    </div>
+  )
+}
+
+function makeRequest(user: User | null, dropoffId: string, reload) {
+  if (!user || user.role !== 'needSupplies') return;
+
+  return (
+    <div className='flex flex-row gap-6 max-w-sm justify-center border-t border-slate-300 pt-2 mt-2'>
+      Make a request
+    </div>
+  )
+}
+
 export default function Dropoffs() {
   const user = useUser();
   const router = useRouter();
@@ -97,21 +128,21 @@ export default function Dropoffs() {
     /> : '';
 
   let deliverRequests = (marker, router) => {
-    /* if (!user || user.role !== 'deliver') return ''; */
+    if (marker.requests.length === 0) return;
 
     return (
       <div className='border-t border-slate-300 pt-2 mt-2'>
         {
           marker.requests.map(request =>
-            <>
-              <SupplyList supplies={request.supplies} request key={request._id}/>
+            <div key={request._id}>
+              <SupplyList supplies={request.supplies} request/>
               <button
                 className='w-full flex flex-row justify-center text-xl text-red-500'
                 onClick={() => router.push(`/deliver/${request._id}`)}
               >
                 Deliver
               </button>
-            </>
+            </div>
           )
         }
       </div>
@@ -120,7 +151,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      {user ? deliveryButtons(user, selected, reload) : ''}
+      {user && user.role === 'delivery' ? deliveryButtons(user, selected, reload) : ''}
       <div className="w-3/4 h-3/4">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
@@ -136,6 +167,8 @@ export default function Dropoffs() {
                 </span>
                 <SupplyList supplies={marker.supplies} />
                 { deliverRequests(marker, router) }
+                { makeDonation(user, marker.id, reload) }
+                { makeRequest(user, marker.id, reload) }
               </MapMarker>
             )
           }
