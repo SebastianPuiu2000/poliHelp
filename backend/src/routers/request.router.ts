@@ -4,6 +4,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import { Request, RequestModel } from '../models/requests.model';
 import { isDesiredRole, isTokenValid } from '../utils';
 import { userRole } from '../models/user.model';
+import { Supply } from '../models/dropoff.model';
 
 export const requestRouter = express.Router();
 
@@ -57,10 +58,17 @@ requestRouter.post('/', async (req, res) => {
         return res.status(401).json({success: false});
     }
 
+    let validSupplies: Supply[] = [];
+    for (let supply of request.supplies) {
+        if (supply.quantity > 0) {
+            validSupplies.push(supply);
+        }
+    }
+
     let createdRequest = await RequestModel.create({
         dropoffId: request.dropoffId,
         userId: payload.id,
-        supplies: request.supplies,
+        supplies: validSupplies,
         lat: request.lat,
         lng: request.lng
     });
