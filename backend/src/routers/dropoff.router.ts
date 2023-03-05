@@ -128,12 +128,18 @@ dropoffRouter.post('/complete_request', async (req, res) => {
     }
 
     // Decrease fulfilled requests' quantities
+    let notFoundSupplies: any[] = [];
     for (let supply of mongoRequest.supplies) {
+        let found = false;
         for (let dropoffSupply of mongoDropoff.supplies) {
             if (dropoffSupply.type === supply.type) {
                 dropoffSupply.quantity = Number(dropoffSupply.quantity) - Number(supply.quantity);
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            notFoundSupplies.push(supply);
         }
     }
     for(let i = 0; i < mongoDropoff.supplies.length; i++) { 
@@ -141,9 +147,18 @@ dropoffRouter.post('/complete_request', async (req, res) => {
             mongoDropoff.supplies.splice(i, 1); 
         }
     }
+    // Create new request (at the same dropoff) with the not found supplies
+    await RequestModel.create({
+        dropoffId: mongoRequest.dropoffId,
+        userId: payload.id,
+        supplies: notFoundSupplies,
+        lat: mongoRequest.lat,
+        lng: mongoRequest.lng
+    });
 
     await mongoRequest.deleteOne();
     await mongoDropoff.save();
+
 
     return res.json({success: true});
 });
