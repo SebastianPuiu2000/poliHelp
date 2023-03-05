@@ -4,17 +4,21 @@ import { useEffect, useState } from 'react';
 import { User, useUser } from '../UserContext';
 import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
+import googleMapReact from 'google-map-react';
 
 function providerButtons(user: User, selected: Point | null, reload: Function) {
-  const noSelection = selected === null;
+  const [value, setValue] = useState('0');
+
+  const valid = selected !== null && parseInt(value) > 0;
 
   const handleCreate = async () => {
-    if (noSelection) return;
+    if (!valid) return;
 
     const response = await fetch('/api/shelter', {
       method: 'POST',
       body: JSON.stringify({
         token: user.token,
+        quantity: parseInt(value),
         ...selected
       })
     });
@@ -25,13 +29,19 @@ function providerButtons(user: User, selected: Point | null, reload: Function) {
   }
 
   return (
-    <div className='flex flex-row gap-6 justify-center'>
+    <div className='flex flex-row gap-6 justify-center items-center'>
+      <input
+        className="w-8 rounded text-center"
+        type="number"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
       <button
-        disabled={noSelection}
-        className={`bg-violet-900 rounded py-2 px-6 my-4 ${noSelection ? 'opacity-30' : ''}`}
+        className={`bg-violet-900 rounded py-2 px-6 my-4 ${!valid ? 'opacity-30' : ''}`}
+        disabled={!valid}
         onClick={handleCreate}
       >
-        Create dropoff point
+        Create shelter
       </button>
     </div>
   )
@@ -42,12 +52,11 @@ async function fetchShelterPoints(setMarkers: any) {
   const data = await response.json();
   if (data.success) {
     console.log(data);
-    setMarkers(data.availableShelters.map(({ dropoff, requests }: any) => {
+    setMarkers(data.availableShelters.map((shelter) => {
       return {
-        id: dropoff._id,
-        point: { lat: dropoff.lat, lng: dropoff.lng },
-        supplies: dropoff.supplies,
-        requests
+        id: shelter._id,
+        point: { lat: shelter.lat, lng: shelter.lng },
+        quantity: shelter.quantity
       }
     }));
   }
@@ -62,6 +71,15 @@ export default function Dropoffs() {
   useEffect(() => {
     fetchShelterPoints(setMarkers);
   }, []);
+
+  const handleClick = (ev: googleMapReact.ClickEventValue) => {
+    if (!user || user.role !== 'provideShelter') return;
+
+    setSelected({
+      lat: ev.lat,
+      lng: ev.lng
+    });
+  };
 
   const reload = async () => {
     await fetchShelterPoints(setMarkers);
@@ -81,7 +99,7 @@ export default function Dropoffs() {
     <div className="h-full w-full flex flex-col justify-center items-center">
       {user ? providerButtons(user, selected, reload) : ''}
       <div className="w-3/4 h-3/4">
-        <Map center={'onDevice'}>
+        <Map center={'onDevice'} onClick={handleClick}>
           {
             markers.map(marker =>
               <MapMarker
@@ -91,9 +109,8 @@ export default function Dropoffs() {
                 color='blue-500'
               >
                 <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
-                  Shelter for
+                  Shelter for <b className='pl-1.5'> {marker.quantity} </b>
                 </span>
-                <span> {2} </span>
               </MapMarker>
             )
           }
