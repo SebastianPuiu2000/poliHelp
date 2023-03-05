@@ -68,7 +68,7 @@ dropoffRouter.post('/', async (req, res) => {
     let existingDropoffs = await DropoffModel.find();
     for (let existingDropoff of existingDropoffs) {
         if (areDropoffsTooClose(dropoff, existingDropoff)) {
-            return res.status(406).json({success: false, messsage: 'Dropoff too close to other dropoffs!'});
+            return res.status(406).json({success: false, message: 'Dropoff too close to other dropoffs!'});
         }
     }
 
