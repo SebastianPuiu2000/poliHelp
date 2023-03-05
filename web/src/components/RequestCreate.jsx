@@ -32,7 +32,7 @@ export default function RequestCreate({ onClick }) {
   return (
     <div className="w-full text-base flex flex-col items-center justify-center">
       <button
-        className="text-lg font-bold text-red-400 mt-2"
+        className="text-lg font-bold text-mahogany-500 mt-2"
         onClick={handleDonation}
         hidden={request}
       >
@@ -50,14 +50,14 @@ export default function RequestCreate({ onClick }) {
           </div>
 
           <input
-            className="text-center rounded-md bg-slate-100 border border-slate-400 text-black outline-none w-10 h-8 mx-2"
+            className="text-center rounded-md bg-mantis-100 border border-mantis-500 text-mantis-800 outline-none w-10 h-8 mx-2"
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
 
           <button
-            className="text-slate-800 text-4xl text-center rounded"
+            className="text-mantis-800 text-4xl text-center rounded"
             onClick={handleAdd}
             disabled={supply === '' || quantity === ''}
           >
@@ -67,7 +67,7 @@ export default function RequestCreate({ onClick }) {
 
         <div className="flex flex-col items-center justify-center mt-2">
           <button
-            className="text-red-400 text-center rounded"
+            className="text-mahogany-500 text-center rounded"
             onClick={handleSubmit}
             disabled={supplies.length <= 0}
           >

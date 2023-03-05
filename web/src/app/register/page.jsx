@@ -224,7 +224,7 @@ export default function Register() {
       </div>
 
       {/* Group 2.2 */}
-      <div className="w-60 my-10" hidden={firstOption !== 'require'}>
+      <div className="my-10 max-w-sm text-center text-lg text-mantis-100" hidden={firstOption !== 'require'}>
 
         {secondOption === "needSupplies" ?
           <div>

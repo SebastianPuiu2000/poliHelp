@@ -90,6 +90,7 @@ function makeRequest(user: User | null, dropoffId: string, center: Point | null,
         ...center
       })
     });
+
     const data = await response.json();
     console.log(data);
     reload();

@@ -23,7 +23,7 @@ export default function SupplyCreate({ onClick }) {
   return (
     <div className="w-full text-base flex flex-col items-center justify-center">
       <button
-        className="text-lg font-bold text-slate-700 mt-2"
+        className="text-lg font-bold text-mantis-700 mt-2"
         onClick={handleDonation}
         hidden={donation}
       >
@@ -36,7 +36,7 @@ export default function SupplyCreate({ onClick }) {
             <SearchBar setSupply={setSupply} value={supply}/>
           </div>
           <input
-            className="text-center rounded-md bg-slate-100 border border-slate-400 text-black outline-none w-10 h-8 ml-2"
+            className="text-center rounded-md bg-mantis-100 border border-mantis-400 text-black outline-none w-10 h-8 ml-2"
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
@@ -45,7 +45,7 @@ export default function SupplyCreate({ onClick }) {
 
         <div className="flex flex-col items-center justify-center mt-2">
           <button
-            className="text-slate-800 text-center rounded"
+            className="text-mantis-800 text-center rounded"
             onClick={handleSubmit}
             disabled={supply === '' || quantity === ''}
           >
