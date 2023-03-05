@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import SupplyCreate from '../../components/SupplyCreate';
 import RequestCreate from '../../components/RequestCreate';
 
-function deliveryButtons(user: User | null, selected: Point | null, reload: Function) {
+function DeliveryButtons(user: User | null, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
 
   const [error, setError] = useState('');
@@ -181,7 +181,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-around">
-      { deliveryButtons(user, selected, reload) }
+      { DeliveryButtons(user, selected, reload) }
       <div className="w-full h-full">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
