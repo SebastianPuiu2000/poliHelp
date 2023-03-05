@@ -57,7 +57,7 @@ export default function Page({ params }) {
       key={'position'}
       lat={center.lat}
       lng={center.lng}
-      color={'mantis-500'}
+      color={'bg-mantis-500'}
     >
       <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
         Position
@@ -69,12 +69,15 @@ export default function Page({ params }) {
       key={'destination'}
       lat={destination.lat}
       lng={destination.lng}
-      color={'mahogany-500'}
+      color={'bg-mahogany-500'}
     >
       <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
         Destination
       </span>
     </MapMarker> : '';
+
+  console.log(positionMarker);
+  console.log(destinationMarker);
 
   return (
     <div className="h-full w-full flex flex-col justify-around">

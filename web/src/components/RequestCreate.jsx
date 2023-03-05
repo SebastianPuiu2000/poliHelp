@@ -59,7 +59,7 @@ export default function RequestCreate({ onClick }) {
           <button
             className="text-mantis-800 text-4xl text-center rounded"
             onClick={handleAdd}
-            disabled={supply === '' || quantity === ''}
+            disabled={supply === '' || quantity === '' || parseInt(quantity) <= 0}
           >
             +
           </button>

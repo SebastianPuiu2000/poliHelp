@@ -47,7 +47,7 @@ export default function SupplyCreate({ onClick }) {
           <button
             className="text-mantis-800 text-center rounded"
             onClick={handleSubmit}
-            disabled={supply === '' || quantity === ''}
+            disabled={supply === '' || quantity === '' || parseInt(quantity) <= 0}
           >
             <b> Donate </b>
           </button>

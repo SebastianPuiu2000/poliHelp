@@ -103,7 +103,7 @@ export default function Dropoffs() {
       key={'selected'}
       lat={selected.lat}
       lng={selected.lng}
-      color={'mantis-400'}
+      color={'bg-mantis-400'}
       onClick={() => setSelected(null)}
     /> : '';
 
@@ -120,7 +120,7 @@ export default function Dropoffs() {
                 key={marker.id}
                 lat={marker.point.lat}
                 lng={marker.point.lng}
-                color='mantis-600'
+                color='bg-mantis-600'
               >
                 <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
                   Shelter for <b className='pl-1.5'> {marker.quantity} </b>
