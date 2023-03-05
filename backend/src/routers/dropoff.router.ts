@@ -88,3 +88,50 @@ dropoffRouter.put('/', async (req, res) => {
 
     return res.json({success: true});
 });
+
+// Complete request at dropoff
+dropoffRouter.post('/complete_request', async (req, res) => {
+    let token = getToken(req.headers.authorization);
+    if (!token) {
+        return res.status(400).json({success: false});
+    }
+
+    let payload: JwtPayload = verify(token);
+    let requestId = req.body.requestId;
+    if (!payload || !requestId) {
+        return res.status(400).json({success: false});
+    }
+    if (!isDesiredRole(payload, userRole.Delivery) &&
+        !isDesiredRole(payload, userRole.SuppliesConsumer)) {
+        return res.status(401).json({success: false});
+    }
+
+    let mongoRequest = await RequestModel.findById(requestId);
+    if (!mongoRequest) {
+        return res.status(400).json({success: false});
+    }
+    let mongoDropoff = await DropoffModel.findById(mongoRequest.dropoffId);
+    if (!mongoDropoff) {
+        return res.status(400).json({success: false});
+    }
+
+    // Decrease fulfilled requests' quantities
+    for (let supply of mongoRequest.supplies) {
+        for (let dropoffSupply of mongoDropoff.supplies) {
+            if (dropoffSupply.type === supply.type) {
+                dropoffSupply.quantity = Number(dropoffSupply.quantity) - Number(supply.quantity);
+                break;
+            }
+        }
+    }
+    for(let i = 0; i < mongoDropoff.supplies.length; i++) { 
+        if(Number(mongoDropoff.supplies[i].quantity) <= 0) {
+            mongoDropoff.supplies.splice(i, 1); 
+        }
+    }
+
+    await mongoRequest.deleteOne();
+    await mongoDropoff.save();
+
+    return res.json({success: true});
+});

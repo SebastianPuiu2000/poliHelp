@@ -12,8 +12,7 @@ export type Request = {
 export const RequestSchema = new mongoose.Schema({
     dropoffId:{
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     userId: {
         type: String,
