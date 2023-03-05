@@ -58,7 +58,7 @@ export default function Page({ params }) {
       lng={center.lng}
       color={'green-500'}
     >
-      <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
+      <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
         Position
       </span>
     </MapMarker> : '';
@@ -68,9 +68,9 @@ export default function Page({ params }) {
       key={'destination'}
       lat={destination.lat}
       lng={destination.lng}
-      color={'red-500'}
+      color={'mahogany-500'}
     >
-      <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
+      <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
         Destination
       </span>
     </MapMarker> : '';
@@ -78,13 +78,13 @@ export default function Page({ params }) {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
       <button
-        className={`bg-violet-900 rounded py-2 px-6 my-4 ${!buttonActive ? 'opacity-30' : ''}`}
+        className={`h-16 flex justify-center rounded py-2 px-6 my-4 ${!buttonActive ? 'opacity-30' : ''}`}
         disabled={!buttonActive}
         onClick={handleClick}
       >
         Finish delivery
       </button>
-      <div className="w-3/4 h-3/4">
+      <div className="w-full h-full">
         <Map center={'onDevice'} onCenter={onCenter}>
           {positionMarker}
           {destinationMarker}

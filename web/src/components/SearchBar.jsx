@@ -10,9 +10,9 @@ function SearchBar(props) {
 
   useEffect(() => {
     setOptions([
-        { "name": "socks", "code": 1 }, 
-        { "name": "chesse", "code": 2 },
-        { "name": "shirts", "code": 3 }, 
+        { "name": "socks", "code": 1 },
+        { "name": "cheese", "code": 2 },
+        { "name": "shirts", "code": 3 },
         { "name": "soap", "code": 4 },
         { "name": "egg", "code": 5 },
         { "name": "bread", "code": 6 },

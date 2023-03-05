@@ -36,7 +36,7 @@ export default function SupplyCreate({ onClick }) {
             <SearchBar setSupply={setSupply} value={supply}/>
           </div>
           <input
-            className="text-center rounded-md bg-mantis-100 border border-mantis-400 text-black outline-none w-10 h-8 ml-2"
+            className="text-center rounded-md bg-mantis-100 border border-mantis-400 text-mantis-800 outline-none w-10 h-8 ml-2"
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
