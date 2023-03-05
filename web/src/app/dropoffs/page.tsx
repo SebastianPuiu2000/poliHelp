@@ -6,6 +6,7 @@ import Map, { Point } from '../../components/Map';
 import MapMarker from '../../components/MapMarker';
 import googleMapReact from 'google-map-react';
 import SupplyList from '../../components/SupplyList';
+import { useRouter } from 'next/navigation';
 
 function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
@@ -56,6 +57,8 @@ async function fetchDropoffPoints({ lat, lng }: Point, setMarkers: any) {
 
 export default function Dropoffs() {
   const user = useUser();
+  const router = useRouter();
+
   const [markers, setMarkers] = useState<any>([]);
 
   const [selected, setSelected] = useState<Point | null>(null);
@@ -93,19 +96,24 @@ export default function Dropoffs() {
       onClick={() => setSelected(null)}
     /> : '';
 
-  let deliverRequests = (marker) => {
+  let deliverRequests = (marker, router) => {
     /* if (!user || user.role !== 'deliver') return ''; */
 
     return (
       <div className='border-t border-slate-300 pt-2 mt-2'>
         {
           marker.requests.map(request =>
-            <SupplyList supplies={request.supplies} request key={request._id}/>
+            <>
+              <SupplyList supplies={request.supplies} request key={request._id}/>
+              <button
+                className='w-full flex flex-row justify-center text-xl text-red-500'
+                onClick={() => router.push(`/deliver/${request._id}`)}
+              >
+                Deliver
+              </button>
+            </>
           )
         }
-        <button className='w-full flex flex-row justify-center text-xl text-red-500'>
-          Deliver
-        </button>
       </div>
     );
   };
@@ -127,7 +135,7 @@ export default function Dropoffs() {
                   Dropoff
                 </span>
                 <SupplyList supplies={marker.supplies} />
-                { deliverRequests(marker) }
+                { deliverRequests(marker, router) }
               </MapMarker>
             )
           }

@@ -12,7 +12,7 @@ export type Center = 'onDevice' | Point;
 
 interface MapProps {
   center: Center,
-  children: any,
+  children?: any,
   onClick?: (ev: GoogleMapReact.ClickEventValue) => void,
   onCenter?: (position: GeolocationPosition) => Promise<void>
 }
