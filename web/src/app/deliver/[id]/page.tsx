@@ -19,6 +19,7 @@ export default function Page({ params }) {
 
   useEffect(() => {
     fetch(`/api/request?id=${id}`).then(async (response) => {
+      console.log(response);
       const data = await response.json();
       if (data.success) {
         console.log(data);
@@ -56,7 +57,7 @@ export default function Page({ params }) {
       key={'position'}
       lat={center.lat}
       lng={center.lng}
-      color={'green-500'}
+      color={'mantis-500'}
     >
       <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
         Position
@@ -76,14 +77,16 @@ export default function Page({ params }) {
     </MapMarker> : '';
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
-      <button
-        className={`h-16 flex justify-center rounded py-2 px-6 my-4 ${!buttonActive ? 'opacity-30' : ''}`}
-        disabled={!buttonActive}
-        onClick={handleClick}
-      >
-        Finish delivery
-      </button>
+    <div className="h-full w-full flex flex-col justify-around">
+      <div className='w-full flex justify-center'>
+        <button
+          className={`bg-mantis-700 w-56 rounded py-2 px-6 my-4 ${!buttonActive ? 'opacity-30' : ''}`}
+          disabled={!buttonActive}
+          onClick={handleClick}
+        >
+          Finish delivery
+        </button>
+      </div>
       <div className="w-full h-full">
         <Map center={'onDevice'} onCenter={onCenter}>
           {positionMarker}

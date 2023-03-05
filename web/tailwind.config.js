@@ -9,7 +9,7 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
-    { pattern: /.*-(red|blue|green)-(500|600)/ }
+    { pattern: /.*-(mahogany,mantis)-(400|500|600)/ }
   ],
   theme: {
     colors: {

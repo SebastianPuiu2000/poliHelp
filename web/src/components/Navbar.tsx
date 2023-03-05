@@ -52,7 +52,7 @@ export default function Navbar() {
   return (
     <div className="flex items-center justify-between py-4 px-6 bg-gradient-to-r from-mantis-500 to-mantis-700">
       <button
-        className="text-matis-50 text-4xl font-bold cursor-pointer"
+        className="text-matis-50 text-4xl font-bold cursor-pointer hover:scale-110 transition"
         onClick={() => router.push('/')}
       >
         <span className='font-light text'>poli</span><span className='font-bold'>Help</span>
