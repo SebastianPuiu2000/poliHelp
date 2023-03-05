@@ -184,7 +184,7 @@ export default function Dropoffs() {
                 key={marker.id}
                 lat={marker.point.lat}
                 lng={marker.point.lng}
-                color={'mantis-500'}
+                color={'mantis-600'}
               >
                 <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
                   Dropoff
