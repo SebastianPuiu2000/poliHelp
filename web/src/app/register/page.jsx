@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import help from "../../../public/help.png"
 import Image from "next/image";
 import { useUserDispatch } from "../UserContext";
@@ -10,6 +10,7 @@ import { decode } from "jsonwebtoken";
 export default function Register() {
   const userDispatch = useUserDispatch();
   const router = useRouter();
+  const ref = useRef();
 
   const [firstOption, setFirstOption] = useState(null);
   const [secondOption, setSecondOption] = useState(null);
@@ -24,6 +25,11 @@ export default function Register() {
   const handleNeedHelpClick = () => {
     setFirstOption('require');
   }
+
+  useEffect(() => {
+    if (ref.current)
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+  }, [secondOption])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,243 +70,242 @@ export default function Register() {
   }
 
   return (
-    <div className="bg-violet-900">
-      <div className="flex flex-col items-center justify-evenly bg-violet-900">
+    <div className="flex flex-col items-center justify-evenly">
+      {/* Group 1 */}
+      <div className="max-w-sm my-5 text-center text-lg text-mantis-100">
 
-        {/* Group 1 */}
-        <div className="w-60 my-5">
-
-          {/* Fie e provide, fie e require, fie e niciuna */}
-          {firstOption === "provide" ?
+        {/* Fie e provide, fie e require, fie e niciuna */}
+        {firstOption === "provide" ?
+          <div>
+            <button
+              className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
+              onClick={handleProvideHelpClick}
+            >
+              I want to help!
+            </button>
+            <button
+              className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
+              onClick={handleNeedHelpClick}
+            >
+              I <b>need</b> help!
+            </button>
+          </div>
+          :
+          firstOption === "require" ?
             <div>
-              <button className="text-center text-white bg-black my-2 p-5 w-full rounded outline outline-white"
+            <button
+                className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                 onClick={handleProvideHelpClick}
               >
                 I want to help!
               </button>
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
+                onClick={handleNeedHelpClick}
+              >
+                I <b>need</b> help!
+              </button>
+            </div>
+            :
+            <div>
+              <button className="bg-mantis-600 my-2 p-5 w-full rounded"
+                onClick={handleProvideHelpClick}
+              >
+                I want to help!
+              </button>
+              <button className="bg-mantis-600 my-2 p-5 w-full rounded"
                 onClick={handleNeedHelpClick}
               >
                 I need help!
               </button>
             </div>
-            :
-            firstOption === "require" ?
-              <div>
-                <button className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
-                  onClick={handleProvideHelpClick}
-                >
-                  I want to help!
-                </button>
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded outline outline-white"
-                  onClick={handleNeedHelpClick}
-                >
-                  I need help!
-                </button>
-              </div>
-              :
-              <div>
-                <button className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                  onClick={handleProvideHelpClick}
-                >
-                  I want to help!
-                </button>
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                  onClick={handleNeedHelpClick}
-                >
-                  I need help!
-                </button>
-              </div>
-          }
+        }
 
-        </div>
+      </div>
 
-        {/* Group 2.1 */}
-        <div className="w-60 my-10" hidden={firstOption !== 'provide'}>
+      {/* Group 2.1 */}
+      <div className="my-10 max-w-sm text-center text-lg text-mantis-100" hidden={firstOption !== 'provide'}>
 
-          {secondOption === "donate" ?
+        {secondOption === "donate" ?
+          <div>
+            <button
+              className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
+              onClick={() => setSecondOption('donate')}
+            >
+              I want to make donations
+            </button>
+
+            <button
+              className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
+              onClick={() => setSecondOption('delivery')}
+            >
+              I want to help deliver donations
+            </button>
+
+            <button
+              className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
+              onClick={() => setSecondOption('provideShelter')}
+            >
+              I want to provide shelter
+            </button>
+          </div>
+          :
+          secondOption === "delivery" ?
             <div>
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded outline"
+                className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                 onClick={() => setSecondOption('donate')}
               >
                 I want to make donations
               </button>
 
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
                 onClick={() => setSecondOption('delivery')}
               >
                 I want to deliver donations
               </button>
 
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                 onClick={() => setSecondOption('provideShelter')}
               >
                 I want to provide shelter
               </button>
             </div>
             :
-            secondOption === "delivery" ?
+            secondOption === "provideShelter" ?
               <div>
                 <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                  className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                   onClick={() => setSecondOption('donate')}
                 >
                   I want to make donations
                 </button>
 
                 <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded outline"
+                  className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                   onClick={() => setSecondOption('delivery')}
                 >
                   I want to deliver donations
                 </button>
 
                 <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                  className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
                   onClick={() => setSecondOption('provideShelter')}
                 >
                   I want to provide shelter
                 </button>
               </div>
               :
-              secondOption === "provideShelter" ?
-                <div>
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
-                    onClick={() => setSecondOption('donate')}
-                  >
-                    I want to make donations
-                  </button>
+              <div>
+                <button
+                  className="bg-mantis-600 my-2 p-5 w-full rounded"
+                  onClick={() => setSecondOption('donate')}
+                >
+                  I want to make donations
+                </button>
 
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
-                    onClick={() => setSecondOption('delivery')}
-                  >
-                    I want to deliver donations
-                  </button>
+                <button
+                  className="bg-mantis-600 my-2 p-5 w-full rounded"
+                  onClick={() => setSecondOption('delivery')}
+                >
+                  I want to deliver donations
+                </button>
 
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded outline"
-                    onClick={() => setSecondOption('provideShelter')}
-                  >
-                    I want to provide shelter
-                  </button>
-                </div>
-                :
-                <div>
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                    onClick={() => setSecondOption('donate')}
-                  >
-                    I want to make donations
-                  </button>
+                <button
+                  className="bg-mantis-600 my-2 p-5 w-full rounded"
+                  onClick={() => setSecondOption('provideShelter')}
+                >
+                  I want to provide shelter
+                </button>
+              </div>
+        }
+      </div>
 
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                    onClick={() => setSecondOption('delivery')}
-                  >
-                    I want to deliver donations
-                  </button>
+      {/* Group 2.2 */}
+      <div className="w-60 my-10" hidden={firstOption !== 'require'}>
 
-                  <button
-                    className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                    onClick={() => setSecondOption('provideShelter')}
-                  >
-                    I want to provide shelter
-                  </button>
-                </div>
-          }
-        </div>
+        {secondOption === "needSupplies" ?
+          <div>
+            <button
+              className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
+              onClick={() => setSecondOption('needSupplies')}
+            >
+              I need supplies
+            </button>
 
-        {/* Group 2.2 */}
-        <div className="w-60 my-10" hidden={firstOption !== 'require'}>
-
-          {secondOption === "needSupplies" ?
+            <button
+              className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
+              onClick={() => setSecondOption('needShelter')}
+            >
+              I need shelter
+            </button>
+          </div>
+          :
+          secondOption === "needShelter" ?
             <div>
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded outline outline-white"
+                className="bg-mantis-600 my-2 p-5 w-full rounded opacity-50"
                 onClick={() => setSecondOption('needSupplies')}
               >
                 I need supplies
               </button>
 
               <button
-                className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
+                className="bg-gradient-to-r from-mantis-600 to-mantis-700 my-2 p-5 w-full rounded outline outline-mantis-400"
                 onClick={() => setSecondOption('needShelter')}
               >
                 I need shelter
               </button>
             </div>
             :
-            secondOption === "needShelter" ?
-              <div>
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded opacity-30"
-                  onClick={() => setSecondOption('needSupplies')}
-                >
-                  I need supplies
-                </button>
+            <div>
+              <button
+                className="bg-mantis-600 my-2 p-5 w-full rounded"
+                onClick={() => setSecondOption('needSupplies')}
+              >
+                I need supplies
+              </button>
 
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded outline outline-white"
-                  onClick={() => setSecondOption('needShelter')}
-                >
-                  I need shelter
-                </button>
-              </div>
-              :
-              <div>
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                  onClick={() => setSecondOption('needSupplies')}
-                >
-                  I need supplies
-                </button>
+              <button
+                className="bg-mantis-600 my-2 p-5 w-full rounded"
+                onClick={() => setSecondOption('needShelter')}
+              >
+                I need shelter
+              </button>
+            </div>
+        }
+      </div>
 
-                <button
-                  className="text-center text-white bg-black my-2 p-5 w-full rounded"
-                  onClick={() => setSecondOption('needShelter')}
-                >
-                  I need shelter
-                </button>
-              </div>
-          }
-        </div>
-
-        {/* Group 3 */}
-        <div className="w-60 my-10" hidden={firstOption === null || secondOption === null}>
-          <div className="flex flex-col items-center justify-center bg-violet-900">
-            <form>
-              <div className="bg-violet-900 w-96 p-6 py-10 rounded shadow-sm">
-                <div className="flex items-center justify-center mb-20">
-                  <Image src={help} width={500} height={500} alt=""></Image>
-                </div>
-                <input
-                  className="w-full text-center rounded-2xl py-2 bg-gray-50 text-black px-1 outline-none mb-6" type="name" placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                  className="w-full text-center rounded-2xl py-2 bg-gray-50 text-black px-1 outline-none mb-4" type="password" placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-              </div>
-            </form>
-            <button className="bg-black text-white w-28 text-center rounded py-2 px-1 mb-8 hover:outline"
-              disabled={secondOption === null}
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+      {/* Group 3 */}
+      <div className="w-60 my-10" hidden={firstOption === null || secondOption === null}>
+        <div className="flex flex-col items-center justify-center bg-violet-900">
+          <div className="flex items-center justify-center mb-10 opacity-30">
+            <Image src={help} width={200} height={200} alt=""></Image>
           </div>
+          <form>
+            <div className="w-96 p-6 py-10 rounded shadow-sm">
+              <input
+                ref={ref}
+                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-black px-1 outline-none mb-6" type="name" placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-black px-1 outline-none mb-4" type="password" placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+            </div>
+          </form>
+          <button className="bg-black text-white w-28 text-center rounded py-2 px-1 mb-8 hover:outline"
+            disabled={secondOption === null}
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>

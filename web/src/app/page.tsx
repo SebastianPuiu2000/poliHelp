@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div>
       <div className="flex flex-col p-10 lg:flex-row justify-center items-center">
-        <div className="items-center justify-center w-1/2 bg-violet-900 flex flex-col">
+        <div className="items-center justify-center w-1/2 flex flex-col">
           <div className="opacity-20">
             <Image src={handshake} width={400} height={400} alt=""></Image>
           </div>
