@@ -51,7 +51,6 @@ async function fetchShelterPoints(setMarkers: any) {
   const response = await fetch(`/api/shelter`);
   const data = await response.json();
   if (data.success) {
-    console.log(data);
     setMarkers(data.availableShelters.map((shelter) => {
       return {
         id: shelter._id,
@@ -60,6 +59,16 @@ async function fetchShelterPoints(setMarkers: any) {
       }
     }));
   }
+}
+
+async function takeShelter(user: User, shelterId: string, reload: Function) {
+  const response = await fetch(`/api/shelter?id=${shelterId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ token: user.token })
+  });
+  const data = await response.json();
+  console.log(data);
+  reload();
 }
 
 export default function Dropoffs() {
@@ -97,7 +106,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      {user ? providerButtons(user, selected, reload) : ''}
+      {user && user.role === 'provideShelter' ? providerButtons(user, selected, reload) : ''}
       <div className="w-3/4 h-3/4">
         <Map center={'onDevice'} onClick={handleClick}>
           {
@@ -111,6 +120,15 @@ export default function Dropoffs() {
                 <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
                   Shelter for <b className='pl-1.5'> {marker.quantity} </b>
                 </span>
+                {
+                  user && user.role === 'needShelter'
+                    ? <div className='border-t text-lg text-slate-800 w-full flex justify-center items-center h-12 text-center'>
+                      <button className='font-bold' onClick={() => takeShelter(user, marker.id, reload)}>
+                        Take shelter here
+                      </button>
+                    </div>
+                    : ''
+                }
               </MapMarker>
             )
           }

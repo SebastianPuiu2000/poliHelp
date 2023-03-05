@@ -48,11 +48,9 @@ export function useUserDispatch() {
 function userReducer(user: User | null, action: UserAction): User | null {
   switch (action.type) {
     case UserActionType.login:
-      console.log('login!');
       return action.payload;
 
     case UserActionType.logout:
-      console.log('logout');
       return null;
   }
 }
