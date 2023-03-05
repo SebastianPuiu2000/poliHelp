@@ -14,8 +14,11 @@ export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
     const form = {
       name,
@@ -45,6 +48,8 @@ export default function Login() {
       });
 
       router.replace('/');
+    } else {
+      setError('Wrong credentials');
     }
   }
 
@@ -71,6 +76,10 @@ export default function Login() {
 
             </div>
           </form>
+
+        <span className="text-mahogany-600 mb-4">
+          {error}
+        </span>
 
         <button
           className="bg-mantis-700 text-white w-28 text-lg text-center rounded py-2 px-1 mb-8 hover:underline"

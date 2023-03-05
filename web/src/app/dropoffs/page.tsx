@@ -10,8 +10,15 @@ import { useRouter } from 'next/navigation';
 import SupplyCreate from '../../components/SupplyCreate';
 import RequestCreate from '../../components/RequestCreate';
 
-function deliveryButtons(user: User, selected: Point | null, reload: Function) {
+function deliveryButtons(user: User | null, selected: Point | null, reload: Function) {
   const noSelection = selected === null;
+
+  const [error, setError] = useState('');
+
+  if (!user || user.role !== 'delivery')
+    return <div className='h-16'></div>;
+
+  console.log(error);
 
   const handleCreate = async () => {
     if (noSelection) return;
@@ -24,7 +31,8 @@ function deliveryButtons(user: User, selected: Point | null, reload: Function) {
       })
     });
 
-    await response.json();
+    const res = await response.json();
+    setError(res.message);
 
     reload();
   }
@@ -38,6 +46,7 @@ function deliveryButtons(user: User, selected: Point | null, reload: Function) {
       >
         Create dropoff point
       </button>
+      <span className='text-mahogany-600 text-lg'> {error} </span>
     </div>
   )
 }
@@ -172,11 +181,7 @@ export default function Dropoffs() {
 
   return (
     <div className="h-full w-full flex flex-col justify-around">
-      {
-        user && user.role === 'delivery'
-          ? deliveryButtons(user, selected, reload)
-          : <div className='h-16'></div>
-      }
+      { deliveryButtons(user, selected, reload) }
       <div className="w-full h-full">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
