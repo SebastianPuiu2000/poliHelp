@@ -80,7 +80,7 @@ dropoffRouter.put('/', async (req, res) => {
     }
 
     let updatedDropoff = await DropoffModel.findByIdAndUpdate(body.id, {
-        supplies: body.supplies
+        $push: {supplies: body.supplies}
     });
     if (!updatedDropoff) {
         return res.status(400).json({success: false});
