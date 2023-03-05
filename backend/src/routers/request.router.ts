@@ -7,6 +7,18 @@ import { userRole } from '../models/user.model';
 
 export const requestRouter = express.Router();
 
+// Get by request id
+requestRouter.get('/', async (req, res) => {
+    let requestId = req.query.id;
+
+    let request = await RequestModel.findById(requestId);
+    if (!request) {
+        return res.status(400).json({success: false});
+    }
+
+    return res.json({success: true, request});
+});
+
 // Get by user id
 requestRouter.get('/user', async (req, res) => {
     let userId = req.query.id;
