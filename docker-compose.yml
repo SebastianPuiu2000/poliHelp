@@ -1,0 +1,35 @@
+version: "3.1"
+services:
+
+  web:
+    container_name: web
+    build:
+      dockerfile: prod.Dockerfile
+      context: ./web
+    restart: always
+    ports:
+      - 80:3000
+    links:
+      - backend
+
+  backend:
+    container_name: backend
+    build:
+      dockerfile: prod.Dockerfile
+      context: ./backend
+    restart: always
+    environment:
+      - JWT_SECRET=super_duper_secret
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    command: mongod --quiet --logpath /dev/null
+
+volumes:
+  mongodata:
