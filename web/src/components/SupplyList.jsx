@@ -1,5 +1,3 @@
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from "react";
-
 import Image from "next/image";
 import food from "../../public/food.png";
 import drop from "../../public/drop.png";
