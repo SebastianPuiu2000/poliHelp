@@ -39,22 +39,22 @@ export default function SupplyList({ supplies, request }) {
     <div className="flex flex-col w-full">
       {
         supplies.map((supply) =>
-          <div key={supply.type} className="flex border border-slate-300 rounded items-center justify-between my-1">
+          <div key={supply.type} className="flex border-2 border-mantis-300 rounded items-center justify-between my-1">
 
-            <div className="flex items-center justify-center w-20 pl-4 text-center text-green-600 h-6 text-lg">
+            <div className="flex items-center justify-center w-20 pl-4 text-center h-6 text-lg">
               <Image src={SupplyIconMap[supply.type]} alt="" width={20} height={20}></Image>
 
-              <div className="w-20 text-center text-slate-800 pl-2">
+              <div className="w-20 text-center text-mantis-800 pl-2">
                 {SupplyNameMap[supply.type]}
               </div>
             </div>
 
             {request ?
-              <div className="flex flex-col justify-center text-center text-xl w-10 text-red-600">
+              <div className="flex flex-col justify-center text-center text-xl w-10 text-mahogany-500">
                 {supply.quantity}
               </div>
               :
-              <div className="flex flex-col justify-center text-center text-xl w-10 text-green-600">
+              <div className="flex flex-col justify-center text-center text-xl w-10 text-mantis-700">
                 {supply.quantity}
               </div>
             }

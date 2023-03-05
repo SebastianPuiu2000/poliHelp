@@ -9,7 +9,8 @@ import googleMapReact from 'google-map-react';
 function ProviderButton(user: User | null, selected: Point | null, reload: Function) {
   const [value, setValue] = useState('0');
 
-  if (!user || user.role !== 'provideShelter') return;
+  if (!user || user.role !== 'provideShelter')
+    return <div className='h-16'></div>;
 
   const valid = selected !== null && parseInt(value) > 0;
 
@@ -31,15 +32,15 @@ function ProviderButton(user: User | null, selected: Point | null, reload: Funct
   }
 
   return (
-    <div className='flex flex-row gap-6 justify-center items-center'>
+    <div className='flex flex-row gap-6 justify-center items-center h-16'>
       <input
-        className="w-8 rounded text-center"
+        className="w-8 bg-mantis-700 rounded text-center"
         type="number"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <button
-        className={`bg-violet-900 rounded py-2 px-6 my-4 ${!valid ? 'opacity-30' : ''}`}
+        className={`bg-mantis-600 text-mantis-50 rounded py-2 px-6 my-4 ${!valid ? 'opacity-30' : ''} hover:underline`}
         disabled={!valid}
         onClick={handleCreate}
       >
@@ -102,14 +103,16 @@ export default function Dropoffs() {
       key={'selected'}
       lat={selected.lat}
       lng={selected.lng}
-      color={'green-500'}
+      color={'mantis-400'}
       onClick={() => setSelected(null)}
     /> : '';
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
-      {ProviderButton(user, selected, reload)}
-      <div className="w-3/4 h-3/4">
+    <div className="h-full w-full flex flex-col justify-around">
+      {
+        ProviderButton(user, selected, reload)
+      }
+      <div className="w-full h-full">
         <Map center={'onDevice'} onClick={handleClick}>
           {
             markers.map(marker =>
@@ -117,14 +120,14 @@ export default function Dropoffs() {
                 key={marker.id}
                 lat={marker.point.lat}
                 lng={marker.point.lng}
-                color='blue-500'
+                color='mantis-600'
               >
-                <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
+                <span className='flex justify-center text-mantis-900 text-lg text-center w-full'>
                   Shelter for <b className='pl-1.5'> {marker.quantity} </b>
                 </span>
                 {
                   user && user.role === 'needShelter'
-                    ? <div className='border-t text-lg text-slate-800 w-full flex justify-center items-center h-12 text-center'>
+                    ? <div className='border-t text-lg text-mantis-800 w-full flex justify-center items-center h-12 text-center'>
                       <button className='font-bold' onClick={() => takeShelter(user, marker.id, reload)}>
                         Take shelter here
                       </button>
