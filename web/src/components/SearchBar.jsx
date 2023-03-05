@@ -9,8 +9,24 @@ function SearchBar(props) {
   }
 
   useEffect(() => {
-    setOptions([{ "name": "socks", "code": 1 }, { "name": "chesse", "code": 2 },
-    { "name": "shirts", "code": 3 }, { "name": "soap", "code": 4 }]);
+    setOptions([
+        { "name": "socks", "code": 1 }, 
+        { "name": "chesse", "code": 2 },
+        { "name": "shirts", "code": 3 }, 
+        { "name": "soap", "code": 4 },
+        { "name": "egg", "code": 5 },
+        { "name": "bread", "code": 6 },
+        { "name": "cheese", "code": 7 },
+        { "name": "water", "code" : 8 },
+        { "name": "pants", "code" : 9 },
+        { "name": "blanket", "code" : 10 },
+        { "name": "soap", "code" : 11 },
+        { "name": "toothpaste", "code" : 12 },
+        { "name": "jacket", "code" : 13 },
+        { "name": "socks", "code" : 14 },
+        { "name": "shirt", "code" : 15 },
+        { "name": "tomato", "code" : 16 }
+    ]);
 
   }, [])
 
