@@ -8,6 +8,16 @@ import { isDesiredRole } from '../utils';
 
 export const dropoffRouter = express.Router();
 
+function areDropoffsTooClose(dropoff1: any, dropoff2: any): boolean {
+    let tolerance = 0.05;
+    let distance = Math.sqrt((dropoff1.lat - dropoff2.lat)**2 + (dropoff1.lng - dropoff2.lng)**2);
+    if (distance > tolerance) {
+        return false;
+    }
+
+    return true;
+}
+
 // Get dropoff points around a given location
 dropoffRouter.get('/', async (req, res) => {
     if (!req.query.lat || !req.query.lng) {
@@ -52,6 +62,14 @@ dropoffRouter.post('/', async (req, res) => {
     }
     if (!isDesiredRole(payload, userRole.Delivery)) {
         return res.status(401).json({success: false});
+    }
+
+    // Check if it's not too close to other dropoffs
+    let existingDropoffs = await DropoffModel.find();
+    for (let existingDropoff of existingDropoffs) {
+        if (areDropoffsTooClose(dropoff, existingDropoff)) {
+            return res.status(406).json({success: false, messsage: 'Dropoff too close to other dropoffs!'});
+        }
     }
 
     await DropoffModel.create({
