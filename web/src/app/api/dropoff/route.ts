@@ -39,5 +39,3 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   return NextResponse.json(data);
 }
-
-export const fetchCache = 'force-dynamic'

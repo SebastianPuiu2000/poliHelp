@@ -22,7 +22,7 @@ function deliveryButtons(user: User, selected: Point | null, reload: Function) {
       })
     });
 
-    console.log(await response.json());
+    await response.json();
 
     reload();
   }
