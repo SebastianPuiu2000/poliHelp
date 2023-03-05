@@ -79,12 +79,24 @@ dropoffRouter.put('/', async (req, res) => {
         return res.status(401).json({success: false})
     }
 
-    let updatedDropoff = await DropoffModel.findByIdAndUpdate(body.id, {
-        $push: {supplies: body.supplies}
-    });
-    if (!updatedDropoff) {
+    let mongoDropoff = await DropoffModel.findById(body.id);
+    if (!mongoDropoff) {
         return res.status(400).json({success: false});
     }
+    for (let supply of body.supplies) {
+        let found = false;
+        for (let mongoSupply of mongoDropoff.supplies) {
+            if (supply.type === mongoSupply.type) {
+                mongoSupply.quantity = Number(supply.quantity) + Number(mongoSupply.quantity);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            mongoDropoff.supplies.push(supply);
+        }
+    }
+    await mongoDropoff.save();
 
     return res.json({success: true});
 });
