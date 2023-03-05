@@ -13,7 +13,7 @@ export default function MapMarker({ children, color, onClick }: any) {
   }
 
   return (
-    <div className={`-left-4 -top-4 w-8 h-8 rounded-full bg-${color} absolute shadow-lg shadow-black`}>
+    <div className={`-left-4 -top-4 w-8 h-8 rounded-full ${color} absolute shadow-lg shadow-black`}>
       <button
         className='inset-0 h-full w-full'
         onClick={handleClick}
