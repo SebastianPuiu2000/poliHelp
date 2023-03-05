@@ -30,10 +30,10 @@ function deliveryButtons(user: User, selected: Point | null, reload: Function) {
   }
 
   return (
-    <div className='flex flex-row gap-6 justify-center'>
+    <div className='flex flex-row gap-6 h-16 justify-center items-center'>
       <button
         disabled={noSelection}
-        className={`bg-violet-900 rounded py-2 px-6 my-4 ${noSelection ? 'opacity-30' : ''}`}
+        className={`bg-mantis-600 text-mantis-50 rounded py-2 px-6 my-4 ${noSelection ? 'opacity-30' : ''} hover:underline`}
         onClick={handleCreate}
       >
         Create dropoff point
@@ -139,7 +139,7 @@ export default function Dropoffs() {
       key={'selected'}
       lat={selected.lat}
       lng={selected.lng}
-      color={'green-500'}
+      color={'mantis-400'}
       onClick={() => setSelected(null)}
     /> : '';
 
@@ -170,9 +170,13 @@ export default function Dropoffs() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center bg-slate-300">
-      {user && user.role === 'delivery' ? deliveryButtons(user, selected, reload) : ''}
-      <div className="w-4/5 h-4/5">
+    <div className="h-full w-full flex flex-col justify-around">
+      {
+        user && user.role === 'delivery'
+          ? deliveryButtons(user, selected, reload)
+          : <div className='h-16'></div>
+      }
+      <div className="w-full h-full">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
             markers.map(marker =>
@@ -180,7 +184,7 @@ export default function Dropoffs() {
                 key={marker.id}
                 lat={marker.point.lat}
                 lng={marker.point.lng}
-                color='blue-500'
+                color={'mantis-500'}
               >
                 <span className='flex justify-center text-slate-900 text-lg text-center w-full'>
                   Dropoff

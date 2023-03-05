@@ -15,11 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${font.className} flex flex-col flex-shrink bg-mantis-200`}
+        className={`${font.className} bg-mantis-200`}
       >
         <UserProvider>
           <Navbar/>
-          <div className={`${font.className}`}>
+          <div className={`${font.className} h-4/5`}>
             {children}
           </div>
         </UserProvider>

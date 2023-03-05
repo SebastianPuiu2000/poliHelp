@@ -33,7 +33,7 @@ function userInfo(user, userDispatch) {
     <div>
       <span> {user.name} </span>
       <button
-        className="text-mantis-800 bg-mantis-300 rounded py-2 px-6 hover:underline"
+        className="text-mantis-800 bg-mantis-300 rounded ml-2 py-2 px-4 hover:underline"
         onClick={handleLogout}
       >
         Logout
