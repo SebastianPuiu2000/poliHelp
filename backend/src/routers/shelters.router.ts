@@ -12,7 +12,16 @@ shelterRouter.get('/', async (_, res) => {
     let availableShelters = await ShelterModel.find({
         $where: 'return (this.quantity - this.userIds.length) > 0;'
     });
-    return res.json({success: true, availableShelters});
+    return res.json({success: true, availableShelters: availableShelters.map(shelter => {
+        return {
+            _id: shelter._id,
+            quantity: shelter.quantity - shelter.userIds.length,
+            userId: shelter.userId,
+            userIds: shelter.userIds,
+            lat: shelter.lat,
+            lng: shelter.lng
+        };
+    })});
 });
 
 // Create new shelter
