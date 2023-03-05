@@ -7,16 +7,16 @@ function userButtons(router) {
   return (
     <div>
       <button
-        className="text-white pr-4"
+        className="text-mantis-50 pr-4 hover:underline"
         onClick={() => router.push('/login')}
       >
         Sign In
       </button>
       <button
-        className="text-white rounded bg-violet-900 py-2 px-6"
+        className="text-mantis-900 rounded bg-mantis-400 py-2 px-6 hover:underline"
         onClick={() => router.push('/register')}
       >
-        Sign up
+        <b> Sign up </b>
       </button>
     </div>
   );
@@ -33,7 +33,7 @@ function userInfo(user, userDispatch) {
     <div>
       <span> {user.name} </span>
       <button
-        className="text-white rounded bg-red-500 ml-2 py-2 px-6"
+        className="text-mantis-800 bg-mantis-300 rounded py-2 px-6 hover:underline"
         onClick={handleLogout}
       >
         Logout
@@ -50,12 +50,12 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <div className="flex items-center justify-between p-7 bg-black">
+    <div className="flex items-center justify-between py-4 px-6 bg-gradient-to-r from-mantis-500 to-mantis-700">
       <button
-        className="text-violet-900 text-4xl font-bold cursor-pointer"
+        className="text-matis-50 text-4xl font-bold cursor-pointer"
         onClick={() => router.push('/')}
       >
-        poli<b>Help</b>
+        <span className='font-light text'>poli</span><span className='font-bold'>Help</span>
       </button>
         { user === null ? userButtons(router) : userInfo(user, userDispatch) }
     </div>

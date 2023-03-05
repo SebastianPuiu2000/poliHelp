@@ -7,7 +7,7 @@ import handshake from "../../public/handshake.png";
 function pageButton(page: string, text: string, router: any) {
   return (
     <button
-      className='bg-black px-6 py-2 rounded text-xl'
+      className='bg-mantis-700 px-6 py-2 rounded text-xl hover:underline'
       key={page}
       onClick={() => router.push(page)}
     >
@@ -34,8 +34,8 @@ export default function Home() {
   const router = useRouter();
 
   const welcomeText =
-    <div className="flex flex-col items-center justify-center bg-violet-900 lg:w-1/2 mt-4">
-      <div className="bg-violet-900 w-5/6 text-2xl font-mono text-justify">
+    <div className="flex flex-col items-center justify-center lg:w-1/2 mt-4">
+      <div className="w-5/6 text-mantis-700 text-xl lg:text-2xl text-justify">
         <p className="indent-8">
           Welcome to our website, where we aim to provide assistance and
           support to those who are in need. We understand that life can be
@@ -54,10 +54,12 @@ export default function Home() {
     </div>;
 
   return (
-    <div className="bg-violet-900">
+    <div>
       <div className="flex flex-col p-10 lg:flex-row justify-center items-center">
         <div className="items-center justify-center w-1/2 bg-violet-900 flex flex-col">
-          <Image src={handshake} width={400} height={400} alt=""></Image>
+          <div className="opacity-20">
+            <Image src={handshake} width={400} height={400} alt=""></Image>
+          </div>
         </div>
         {welcomeText}
       </div>

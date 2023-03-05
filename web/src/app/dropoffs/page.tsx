@@ -170,9 +170,9 @@ export default function Dropoffs() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
+    <div className="h-full w-full flex flex-col justify-center items-center bg-slate-300">
       {user && user.role === 'delivery' ? deliveryButtons(user, selected, reload) : ''}
-      <div className="w-3/4 h-3/4">
+      <div className="w-4/5 h-4/5">
         <Map center={'onDevice'} onCenter={onCenter} onClick={handleClick}>
           {
             markers.map(marker =>
