@@ -288,19 +288,22 @@ export default function Register() {
             <div className="w-96 p-6 py-10 rounded shadow-sm">
               <input
                 ref={ref}
-                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-black px-1 outline-none mb-6" type="name" placeholder="Name"
+                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-mantis-50 placeholder:text-mantis-200 px-1 outline-none mb-6" type="name" placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <input
-                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-black px-1 outline-none mb-4" type="password" placeholder="Password"
+                className="w-full text-center rounded-2xl py-2 bg-mantis-600 text-mantis-50 placeholder:text-mantis-200 px-1 outline outline-mantis-200 mb-4"
+                type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
 
             </div>
           </form>
-          <button className="bg-black text-white w-28 text-center rounded py-2 px-1 mb-8 hover:outline"
+          <button
+            className="bg-mantis-700 text-white w-28 text-lg text-center rounded py-2 px-1 mb-8 hover:underline"
             disabled={secondOption === null}
             onClick={handleSubmit}
           >
