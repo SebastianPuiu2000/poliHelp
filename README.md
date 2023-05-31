@@ -1,1 +1,1 @@
-# 2NHack
+# 2NHack - The Haskelers
